@@ -20,7 +20,7 @@ export default function Login({ history }) {
 
   useEffect(() => {
     function enableBtn() {
-      const MIN_PASSWORD_LENGTH = 6;
+      const MIN_PASSWORD_LENGTH = 7;
       const emailIsValid = email.length > 1 ? validateEmail(email) : false;
 
       if (password.length >= MIN_PASSWORD_LENGTH && emailIsValid) {
