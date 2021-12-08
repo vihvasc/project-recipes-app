@@ -1,10 +1,23 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import './App.css';
-// import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
-import Food from './pages/Food';
+import Explore from './pages/Explore';
+import Food from './pages/FoodPages/Food';
+import ExploreFoods from './pages/FoodPages/ExploreFoods';
+import ExploreFoodsByIngredients from './pages/FoodPages/ExploreFoodsByIngredients';
+import ExploreFoodsByLocation from './pages/FoodPages/ExploreFoodsByLocation';
+import FoodRecipeDetails from './pages/FoodPages/FoodRecipeDetails';
+import FoodRecipeProcess from './pages/FoodPages/FoodRecipeProcess';
+import Cocktails from './pages/CocktailPages/Cocktails';
+import CocktailsRecipeDetails from './pages/CocktailPages/CocktailsRecipeDetails';
+import CocktailsRecipeProcess from './pages/CocktailPages/CocktailsRecipeProcess';
+import ExploreCocktails from './pages/CocktailPages/ExploreCocktails';
+import CocktailsByIngredients from './pages/CocktailPages/ExploreCocktailsByIngredients';
+import DoneRecipes from './pages/Recipes/DoneRecipes';
+import FavoriteRecipes from './pages/Recipes/FavoriteRecipes';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -20,102 +33,92 @@ function App() {
         component={ Food }
       />
 
-      {/* <Route
+      <Route
         exact
         path="/comidas/:id"
-        component={ FoodDetails }
-      /> */}
+        component={ FoodRecipeDetails }
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/comidas/:id/in-progress"
-        component={ FoodInProgress }
-      /> */}
+        component={ FoodRecipeProcess }
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/bebidas"
         component={ Cocktails }
-      /> */}
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/bebidas/:id"
-        component={ CocktailsDetails }
-      /> */}
+        component={ CocktailsRecipeDetails }
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/bebidas/:id/in-progress"
-        component={ CocktailsInProgress }
-      /> */}
+        component={ CocktailsRecipeProcess }
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/explorar"
         component={ Explore }
-      /> */}
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/explorar/comidas"
-        component={ ExploreFood }
-      /> */}
+        component={ ExploreFoods }
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/explorar/bebidas"
         component={ ExploreCocktails }
-      /> */}
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/explorar/comidas/ingredientes"
-        component={ ExploreFoodIngredients }
-      /> */}
+        component={ ExploreFoodsByIngredients }
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/explorar/bebidas/ingredientes"
-        component={ ExploreCocktailsIngredients }
-      /> */}
+        component={ CocktailsByIngredients }
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/explorar/comidas/area"
-        component={ ExploreFoodByArea }
-      /> */}
+        component={ ExploreFoodsByLocation }
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/perfil"
         component={ Profile }
-      /> */}
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/receitas-feitas"
         component={ DoneRecipes }
-      /> */}
+      />
 
-      {/* <Route
+      <Route
         exact
         path="/receitas-favoritas"
         component={ FavoriteRecipes }
-      /> */}
+      />
 
     </Switch>
 
-  // <div className="meals">
-  //   <span className="logo">TRYBE</span>
-  //   <object
-  //     className="rocksGlass"
-  //     type="image/svg+xml"
-  //     data={ rockGlass }
-  //   >
-  //     Glass
-  //   </object>
-  // </div>
   );
 }
 
