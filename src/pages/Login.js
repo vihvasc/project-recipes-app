@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import FormControl from 'react-bootstrap/FormControl';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const DEFAULT_LOGIN = {
   email: '',
@@ -45,7 +48,9 @@ export default function Login({ history }) {
     <div>
       LOGIN
       <form>
-        <input
+
+        <InputGroup
+          className="mb-3"
           data-testid="email-input"
           id="email"
           placeholder="Email"
@@ -53,9 +58,14 @@ export default function Login({ history }) {
           name="email"
           value={ email }
           onChange={ ({ target }) => setLoginData({ ...loginData, email: target.value }) }
-        />
+        >
+          <InputGroup.Text id="basic-addon3">
+            email
+          </InputGroup.Text>
+          <FormControl id="basic-url" aria-describedby="basic-addon3" />
+        </InputGroup>
 
-        <input
+        <InputGroup
           data-testid="password-input"
           placeholder="Senha"
           id="password"
@@ -65,16 +75,23 @@ export default function Login({ history }) {
           onChange={ ({ target }) => setLoginData(
             { ...loginData, password: target.value },
           ) }
-        />
 
-        <button
+        >
+          <InputGroup.Text id="basic-addon3">
+            senha
+          </InputGroup.Text>
+          <FormControl id="basic-url" aria-describedby="basic-addon3" type="password" />
+        </InputGroup>
+
+        <Button
+          variant="outline-dark"
           type="button"
           data-testid="login-submit-btn"
           disabled={ isDisabled }
           onClick={ handleClick }
         >
           Login
-        </button>
+        </Button>
       </form>
 
     </div>
