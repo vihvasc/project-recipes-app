@@ -6,7 +6,7 @@ import searchIcon from '../../images/searchIcon.svg';
 
 export default function Header({ title, displaySearch = true }) {
   const history = useHistory();
-  const [showButton, setShowButton] = useState(false);
+  const [showSearchBar, setSearchBar] = useState(false);
   const [query, setQuery] = useState('');
   return (
     <>
@@ -18,8 +18,6 @@ export default function Header({ title, displaySearch = true }) {
           onClick={ () => history.push('/perfil') }
           src={ profileIcon }
         />
-        {/* <img src={ profileIcon } alt="profile-button" /> */}
-        {/* </input> */}
 
         <h1 data-testid="page-title">{title}</h1>
 
@@ -28,21 +26,12 @@ export default function Header({ title, displaySearch = true }) {
           data-testid="search-top-btn"
           type="image"
           alt="search top button"
-          onClick={ () => setShowButton(!showButton) }
+          onClick={ () => setSearchBar(!showSearchBar) }
           src={ searchIcon }
         />}
-        {/* <input
-          data-testid="search-top-btn"
-          type="image"
-          alt="search top button"
-          onClick={ () => setShowButton(!showButton) }
-          src={ searchIcon }
-        /> */}
-        {/* <img src={ searchIcon } alt="search-button" /> */}
-        {/* </input> */}
       </header>
 
-      {showButton
+      {showSearchBar
       && <input
         className="mb-3"
         data-testid="search-input"
