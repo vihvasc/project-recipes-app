@@ -1,7 +1,7 @@
 import { screen, fireEvent } from '@testing-library/dom';
 import React from 'react';
 import App from '../App';
-import { renderWithRouter } from './test-utils';
+import renderWithRouter from './test-utils';
 
 const EMAIL_DE_TESTE = 'algum@email.com';
 const SENHA_DE_TESTE = '123456789';
