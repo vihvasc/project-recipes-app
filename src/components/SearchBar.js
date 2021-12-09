@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
+import { fetchNome, fetchPrimeiraLetra, fetchIngrediente } from '../services/fetchApi';
 
 export default class SearchBar extends Component {
   constructor() {
     super();
 
     this.state = {
-      isLoading: false,
       radio: '',
       data: [],
+      input: '',
     };
 
     this.handleRadios = this.handleRadios.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleRadios({ target }) {
@@ -19,10 +22,48 @@ export default class SearchBar extends Component {
     });
   }
 
+  handleChange({ target }) {
+    this.setState({
+      input: target.value,
+    });
+  }
+
+  async handleSubmit(e) {
+    const { radio, input, data } = this.state;
+    e.preventDefault();
+    if (radio === 'ingrediente') {
+      const ingredienteData = await fetchIngrediente(input);
+      this.setState({
+        data: ingredienteData,
+      });
+    }
+    if (radio === 'nome') {
+      const nomeData = await fetchNome(input);
+      this.setState({
+        data: nomeData,
+      });
+    }
+    if ((radio === 'primeira') && (input.length !== 1)) {
+      global.alert('Insira somente uma letra');
+    } else {
+      const primeiraData = await fetchPrimeiraLetra(input);
+      this.setState({
+        data: primeiraData,
+      });
+    }
+    console.log(data);
+  }
+
   render() {
-    const { radio } = this.state;
+    const { input } = this.state;
     return (
-      <form>
+      <form onSubmit={ this.handleSubmit }>
+        <input
+          data-testid="search-input"
+          type="text"
+          value={ input }
+          onChange={ this.handleChange }
+        />
         <label htmlFor="ingrediente">
           <input
             type="radio"
@@ -32,8 +73,7 @@ export default class SearchBar extends Component {
             name="selection"
             onChange={ this.handleRadios }
           />
-          {' '}
-          ingrediente
+          Ingrediente
         </label>
         <label htmlFor="nome">
           <input
@@ -44,8 +84,7 @@ export default class SearchBar extends Component {
             name="selection"
             onChange={ this.handleRadios }
           />
-          {' '}
-          nome
+          Nome
         </label>
         <label htmlFor="primeira">
           <input
