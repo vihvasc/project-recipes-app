@@ -30,21 +30,21 @@ export default class SearchBar extends Component {
 
   async handleSubmit(e) {
     const { radio, input, data } = this.state;
+    console.log(radio);
+    console.log(input);
     e.preventDefault();
     if (radio === 'ingrediente') {
       const ingredienteData = await fetchIngrediente(input);
       this.setState({
         data: ingredienteData,
       });
-    }
-    if (radio === 'nome') {
+    } else if (radio === 'nome') {
       const nomeData = await fetchNome(input);
       this.setState({
         data: nomeData,
       });
-    }
-    if ((radio === 'primeira') && (input.length !== 1)) {
-      global.alert('Insira somente uma letra');
+    } else if ((radio === 'primeira') && (input.length !== 1)) {
+      global.alert('Sua busca deve conter somente 1 (um) caracter');
     } else {
       const primeiraData = await fetchPrimeiraLetra(input);
       this.setState({
