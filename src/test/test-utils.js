@@ -2,8 +2,10 @@ import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 // test utils file
-export default renderWithRouter = (ui, { route = '/' } = {}) => {
+export const renderWithRouter = (ui, { route = '/' } = {}) => {
   window.history.pushState({}, 'Test page', route);
 
   return render(ui, { wrapper: BrowserRouter });
 };
+
+export default renderWithRouter;
