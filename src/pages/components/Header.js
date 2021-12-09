@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
+import Search from './Search';
 
 export default function Header({ title, displaySearch = true }) {
   const history = useHistory();
-  const [showSearchBar, setSearchBar] = useState(false);
-  const [query, setQuery] = useState('');
+  const [showButton, setShowButton] = useState(false);
   return (
     <>
       <header className="page-header">
@@ -26,21 +26,14 @@ export default function Header({ title, displaySearch = true }) {
           data-testid="search-top-btn"
           type="image"
           alt="search top button"
-          onClick={ () => setSearchBar(!showSearchBar) }
+          onClick={ () => setShowButton(!showButton) }
           src={ searchIcon }
         />}
+
       </header>
 
-      {showSearchBar
-      && <input
-        className="mb-3"
-        data-testid="search-input"
-        placeholder="Digite sua busca"
-        type="text"
-        name="query"
-        value={ query }
-        onChange={ ({ target }) => setQuery(target.value) }
-      />}
+      {showButton
+      && <Search />}
 
     </>
   );
