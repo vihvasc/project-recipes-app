@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { useHistory } from 'react-router';
+import AppContext from '../../context/AppContext';
 import fetchAPI from '../helpers/fetchAPI';
 
 const types = ['ingredients', 'name', 'first-letter'];
@@ -9,12 +10,28 @@ function Search() {
   const oneLetter = useRef(null);
   const [query, setQuery] = useState('');
   const [type, setType] = useState(types[0]);
+  const { data, setData } = useContext(AppContext);
 
-  function handleClick() {
+  async function handleClick() {
     if (oneLetter.current.checked && query.length > 1) {
       return global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
-    fetchAPI(type, query, history.location.pathname);
+    const APIData = await fetchAPI(type, query, history.location.pathname);
+    console.log(APIData);
+    setData(APIData);
+
+    if (data === null) {
+      return global
+        .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    }
+
+    if (APIData.length === 1) {
+      const id = Object.values(APIData[0])[0];
+      const key = Object.keys(APIData[0])[0];
+      console.log(id, key);
+      return key === 'meals' ? history.push(`/comidas/${id}`)
+        : history.push(`/bebidas/${id}`);
+    }
   }
 
   return (

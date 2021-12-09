@@ -20,7 +20,7 @@ export default async function fetchAPI(type, value, location) {
     default:
       return console.log('DEU RUIM');
     }
-    return data;
+    return Object.values(data)[0];
   }
 
   // Procura pela API de comidas
@@ -40,5 +40,6 @@ export default async function fetchAPI(type, value, location) {
   default:
     return console.log('DEU RUIM');
   }
-  return data;
+
+  return Object.values(data)[0];
 }
