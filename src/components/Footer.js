@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import DrinkIcon from '../images/drinkIcon.svg';
-import MealIcon from '../images/mealIcon.svg';
-import ExploreIcon from '../images/exploreIcon.svg';
+import drinkIcon from '../images/drinkIcon.svg';
+import mealIcon from '../images/mealIcon.svg';
+import exploreIcon from '../images/exploreIcon.svg';
 
 export default class Footer extends Component {
   render() {
     return (
       <footer data-testid="footer" className="footer">
-        <Link to="/bebidas" data-testid="drinks-bottom-btn">
-          <img src={ DrinkIcon } alt="drink icon" />
+        <Link to="/bebidas">
+          <img src={ drinkIcon } alt="drink icon" data-testid="drinks-bottom-btn" />
         </Link>
-        <Link to="/comidas" data-testid="food-bottom-btn">
-          <img src={ MealIcon } alt="meal icon" />
+        <Link to="/comidas">
+          <img src={ mealIcon } alt="meal icon" data-testid="food-bottom-btn" />
         </Link>
-        <Link to="/explorar" data-testid="explore-bottom-btn">
-          <img src={ ExploreIcon } alt="explore icon" />
+        <Link to="/explorar">
+          <img src={ exploreIcon } alt="explore icon" data-testid="explore-bottom-btn" />
         </Link>
       </footer>
     );
