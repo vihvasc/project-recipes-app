@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import CardRecipes from '../components/CardRecipes';
 
 export default function CockTails() {
   return (
@@ -8,6 +9,7 @@ export default function CockTails() {
       <div>
         CockTails
       </div>
+      <CardRecipes />
     </>
   );
 }
