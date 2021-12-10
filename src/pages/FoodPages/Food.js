@@ -1,5 +1,6 @@
 import React from 'react';
 import CardRecipes from '../components/CardRecipes';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 export default function Food() {
@@ -10,6 +11,7 @@ export default function Food() {
         COMIDA
       </div>
       <CardRecipes />
+      <Footer />
     </>
   );
 }

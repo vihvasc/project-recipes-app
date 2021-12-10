@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import CardRecipes from '../components/CardRecipes';
+import Footer from '../components/Footer';
 
 export default function CockTails() {
   return (
@@ -10,6 +11,7 @@ export default function CockTails() {
         CockTails
       </div>
       <CardRecipes />
+      <Footer />
     </>
   );
 }
