@@ -20,7 +20,7 @@ function Search() {
     const APIData = await fetchAPI(type, query, history.location.pathname);
     setData(APIData);
 
-    if (APIData === null) {
+    if (!APIData) {
       return global
         .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }

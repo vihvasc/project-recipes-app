@@ -1,4 +1,5 @@
 import React from 'react';
+import CardRecipes from '../components/CardRecipes';
 import Header from '../components/Header';
 
 export default function Food() {
@@ -8,6 +9,7 @@ export default function Food() {
       <div>
         COMIDA
       </div>
+      <CardRecipes />
     </>
   );
 }
