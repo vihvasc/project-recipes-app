@@ -34,6 +34,7 @@ export default async function fetchAPI(type, value, location) {
     data = await response.json();
     break;
   case 'first-letter':
+    // console.log('chegou first letter comida');
     response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${value}`);
     data = await response.json();
     break;

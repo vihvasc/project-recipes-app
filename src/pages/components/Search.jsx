@@ -11,16 +11,16 @@ function Search() {
   const [query, setQuery] = useState('');
   const [type, setType] = useState(types[0]);
   const { data, setData } = useContext(AppContext);
+  console.log('data ao renderizar o Search:', data);
 
   async function handleClick() {
     if (oneLetter.current.checked && query.length > 1) {
       return global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
     const APIData = await fetchAPI(type, query, history.location.pathname);
-    console.log(APIData);
     setData(APIData);
 
-    if (data === null) {
+    if (APIData === null) {
       return global
         .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
@@ -28,8 +28,7 @@ function Search() {
     if (APIData.length === 1) {
       const id = Object.values(APIData[0])[0];
       const key = Object.keys(APIData[0])[0];
-      console.log(id, key);
-      return key === 'meals' ? history.push(`/comidas/${id}`)
+      return key.includes('eal') ? history.push(`/comidas/${id}`)
         : history.push(`/bebidas/${id}`);
     }
   }

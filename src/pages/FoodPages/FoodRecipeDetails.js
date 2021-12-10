@@ -10,8 +10,7 @@ import AppContext from '../../context/AppContext';
 export default function FoodRecipeDetails() {
   const { id } = useParams();
   const { data } = useContext(AppContext);
-  console.log(id);
-  console.log('foodRecipesdata', data);
+  console.log('data ao renderizar o :', data);
   return (
     <div>
       FoodRecipeDetails
