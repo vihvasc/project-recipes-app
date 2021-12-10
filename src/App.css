@@ -1,5 +1,14 @@
 .page-header {
-  background-color: blueviolet;
+  background-color: rgb(109, 109, 165);
   display: flex;
   justify-content: space-between;
+}
+
+.page-footer {
+  background-color: rgb(78, 78, 116);
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
 }
