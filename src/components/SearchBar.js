@@ -48,7 +48,7 @@ class SearchBar extends Component {
     // const { meals, drinks } = apiReturn;
     console.log(data);
 
-    if (Object.values(apiReturnArr[0])[0].length === 0) {
+    if (apiReturnArr === null) {
       // console.log('chegou null');
       return global
         .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
