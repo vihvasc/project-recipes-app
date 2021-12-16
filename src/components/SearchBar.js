@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import fetchAPI from '../services/fetchApi';
 
-export default class SearchBar extends Component {
+class SearchBar extends Component {
   constructor() {
     super();
 
@@ -32,30 +32,37 @@ export default class SearchBar extends Component {
 
   async handleSubmit(e) {
     const { radio, input, data } = this.state;
-    const { pageTitle } = this.props;
+    const { pageTitle, history } = this.props;
     const lowerCaseTitle = pageTitle.toLowerCase();
     e.preventDefault();
 
     if ((radio === 'primeira') && (input.length !== 1)) {
-      global.alert('Sua busca deve conter somente 1 (um) caracter');
+      return global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
-
     const apiReturn = await fetchAPI(radio, input, lowerCaseTitle);
-
+    // console.log(apiReturn);
+    const apiReturnArr = Object.values(apiReturn)[0];
     this.setState({
-      data: apiReturn,
+      data: apiReturnArr,
     });
+    // const { meals, drinks } = apiReturn;
+    console.log(data);
 
-    if (apiReturn === 0) {
-      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    if (Object.values(apiReturnArr[0])[0].length === 0) {
+      // console.log('chegou null');
+      return global
+        .alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
 
-    if (apiReturn === 1) {
-      const id = Object.values(apiReturn[0])[0];
-      const key = Object.keys(apiReturn[0])[0];
-      return key.includes('bebidas')
-        ? <Redirect to={ `/bebidas/${id}` } />
-        : <Redirect to={ `/comidas/${id}` } />;
+    if (apiReturnArr.length === 1) {
+      // console.log(Object.values(apiReturn[1]));
+      const id = Object.values(apiReturnArr[0])[0];
+      // console.log(id);
+      const key = Object.keys(apiReturn)[0];
+      // console.log(key);
+      return (key.includes('drinks')
+        ? history.push(`/bebidas/${id}`)
+        : history.push(`/comidas/${id}`));
     }
   }
 
@@ -110,4 +117,7 @@ export default class SearchBar extends Component {
 
 SearchBar.propTypes = {
   pageTitle: PropTypes.string.isRequired,
+  history: PropTypes.objectOf(string).isRequired,
 };
+
+export default withRouter(SearchBar);
