@@ -53,7 +53,7 @@ class Header extends Component {
             />
           </button>)
           : null }
-        { isSearching ? <SearchBar /> : null }
+        { isSearching ? <SearchBar pageTitle={ pageTitle } /> : null }
       </div>
     );
   }

@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { fetchNome, fetchPrimeiraLetra, fetchIngrediente } from '../services/fetchApi';
+import { Redirect } from 'react-router-dom';
+import fetchAPI from '../services/fetchApi';
 
 export default class SearchBar extends Component {
   constructor() {
@@ -30,28 +32,31 @@ export default class SearchBar extends Component {
 
   async handleSubmit(e) {
     const { radio, input, data } = this.state;
-    console.log(radio);
-    console.log(input);
+    const { pageTitle } = this.props;
+    const lowerCaseTitle = pageTitle.toLowerCase();
     e.preventDefault();
-    if (radio === 'ingrediente') {
-      const ingredienteData = await fetchIngrediente(input);
-      this.setState({
-        data: ingredienteData,
-      });
-    } else if (radio === 'nome') {
-      const nomeData = await fetchNome(input);
-      this.setState({
-        data: nomeData,
-      });
-    } else if ((radio === 'primeira') && (input.length !== 1)) {
+
+    if ((radio === 'primeira') && (input.length !== 1)) {
       global.alert('Sua busca deve conter somente 1 (um) caracter');
-    } else {
-      const primeiraData = await fetchPrimeiraLetra(input);
-      this.setState({
-        data: primeiraData,
-      });
     }
-    console.log(data);
+
+    const apiReturn = await fetchAPI(radio, input, lowerCaseTitle);
+
+    this.setState({
+      data: apiReturn,
+    });
+
+    if (apiReturn === 0) {
+      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
+    }
+
+    if (apiReturn === 1) {
+      const id = Object.values(apiReturn[0])[0];
+      const key = Object.keys(apiReturn[0])[0];
+      return key.includes('bebidas')
+        ? <Redirect to={ `/bebidas/${id}` } />
+        : <Redirect to={ `/comidas/${id}` } />;
+    }
   }
 
   render() {
@@ -102,3 +107,7 @@ export default class SearchBar extends Component {
     );
   }
 }
+
+SearchBar.propTypes = {
+  pageTitle: PropTypes.string.isRequired,
+};

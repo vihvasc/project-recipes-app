@@ -1,20 +1,34 @@
-export async function fetchIngrediente(ingrediente) {
-  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingrediente}`);
-  const result = await response.json();
+export default async function fetchAPI(type, value, pageTitle) {
+  if (pageTitle.includes('comidas')) {
+    if (type === 'ingrediente') {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${value}`);
+      const data = response.json();
+      return data;
+    } if (type === 'nome') {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${value}`);
+      const data = response.json();
+      return data;
+    } if (type === 'primeira') {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${value}`);
+      const data = response.json();
+      return data;
+    }
+    return null;
+  }
 
-  return result;
-}
-
-export async function fetchNome(nome) {
-  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${nome}`);
-  const result = await response.json();
-
-  return result;
-}
-
-export async function fetchPrimeiraLetra(primeiraLetra) {
-  const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${primeiraLetra}`);
-  const result = await response.json();
-
-  return result;
+  if (pageTitle.includes('bebidas')) {
+    if (type === 'ingrediente') {
+      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${value}`);
+      const data = response.json();
+      return data;
+    } if (type === 'nome') {
+      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${value}`);
+      const data = response.json();
+      return data;
+    } if (type === 'primeira') {
+      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${value}`);
+      const data = response.json();
+      return data;
+    }
+  }
 }
