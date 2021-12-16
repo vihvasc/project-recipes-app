@@ -41,7 +41,7 @@ function App() {
         <Route path="/explorar/comidas/area" component={ ExploreFoodOrigin } />
         <Route path="/explorar/comidas" component={ ExploreFoods } />
         <Route path="/explorar" component={ Explore } />
-        <Route path="/profile" component={ Profile } />
+        <Route path="/perfil" component={ Profile } />
         <Route path="/receitas-feitas" component={ DoneRecipes } />
         <Route path="/receitas-favoritas" component={ FavoriteRecipes } />
         <Route path="/" component={ Login } />
