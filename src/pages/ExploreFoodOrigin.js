@@ -1,8 +1,13 @@
 import React from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function ExploreFoodOrigin() {
   return (
-    <h1>Explorar comidas por local de origem</h1>
+    <div>
+      <Header pageTitle="Explorar Origem" searchBtn />
+      <Footer />
+    </div>
   );
 }
 
