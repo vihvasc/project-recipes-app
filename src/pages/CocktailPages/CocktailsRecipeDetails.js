@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { MEAL_URLS } from '../../consts';
+import Carrousel from '../components/Carrousel';
 import Loading from '../components/Loading';
 import filterObjIntoArray from '../helpers/dataManagement';
 
@@ -8,7 +10,6 @@ export default function CockTailsRecipeDetails() {
   const [cocktail, setCocktail] = useState({});
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
-  console.log(id);
 
   const memoizedData = useCallback(
     async () => {
@@ -28,7 +29,6 @@ export default function CockTailsRecipeDetails() {
     <div>
       {cocktail ? (
         <div>
-          {console.log(cocktail)}
           <img src={ cocktail.strDrinkThumb } alt="" data-testid="recipe-photo" />
           <h1 data-testid="recipe-title">{ cocktail.strDrink }</h1>
           <button type="button" data-testid="share-btn">SHARE</button>
@@ -58,9 +58,7 @@ export default function CockTailsRecipeDetails() {
 
           <button type="button" data-testid="start-recipe-btn">INICIAR RECEITA</button>
 
-          <div>
-            <div data-testid={ `${0}-recomendation-card` }>RECEITA RECOMENDADA 1</div>
-          </div>
+          <Carrousel url={ MEAL_URLS.NAME } />
         </div>
       ) : <Loading />}
     </div>

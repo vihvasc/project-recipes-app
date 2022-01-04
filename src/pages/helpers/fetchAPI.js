@@ -1,3 +1,5 @@
+import { MEAL_URLS, DRINK_URLS } from '../../consts';
+
 export default async function fetchAPI(type, value, location) {
   let response = null;
   let data = null;
@@ -6,15 +8,15 @@ export default async function fetchAPI(type, value, location) {
     // Procura pela API de Drinks
     switch (type) {
     case 'ingredients':
-      response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${value}`);
+      response = await fetch(`${MEAL_URLS.INGREDIENT}${value}`);
       data = await response.json();
       break;
     case 'name':
-      response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${value}`);
+      response = await fetch(`${MEAL_URLS.NAME}${value}`);
       data = await response.json();
       break;
     case 'first-letter':
-      response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${value}`);
+      response = await fetch(`${MEAL_URLS.FIRST_LETTER}${value}`);
       data = await response.json();
       break;
     default:
@@ -26,16 +28,16 @@ export default async function fetchAPI(type, value, location) {
   // Procura pela API de comidas
   switch (type) {
   case 'ingredients':
-    response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${value}`);
+    response = await fetch(`${DRINK_URLS.INGREDIENT}${value}`);
     data = await response.json();
     break;
   case 'name':
-    response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${value}`);
+    response = await fetch(`${DRINK_URLS.NAME}${value}`);
     data = await response.json();
     break;
   case 'first-letter':
     // console.log('chegou first letter comida');
-    response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${value}`);
+    response = await fetch(`${DRINK_URLS.FIRST_LETTER}${value}`);
     data = await response.json();
     break;
   default:

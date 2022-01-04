@@ -3,13 +3,14 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
 import filterObjIntoArray from '../helpers/dataManagement';
+import Carrousel from '../components/Carrousel';
+import { DRINK_URLS } from '../../consts';
 
 export default function FoodRecipeDetails() {
   const { id } = useParams();
   const [meal, setMeal] = useState({});
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
-  console.log(id);
 
   const memoizedData = useCallback(
     async () => {
@@ -29,24 +30,23 @@ export default function FoodRecipeDetails() {
     <div>
       {meal ? (
         <div>
-          {console.log(meal)}
           <img src={ meal.strMealThumb } alt="" data-testid="recipe-photo" />
           <h1 data-testid="recipe-title">{ meal.strMeal }</h1>
           <button type="button" data-testid="share-btn">SHARE</button>
           <button type="button" data-testid="favorite-btn">FAVORITE</button>
           <h3 data-testid="recipe-category">{ meal.strCategory }</h3>
 
-          <ol>
+          <ul>
             Ingredientes:
             {ingredients.map((ingredient, index) => (
               <li
                 key={ index }
                 data-testid={ `${index}-ingredient-name-and-measure` }
               >
-                {`${ingredient} ${measures[index]}`}
+                {`${measures[index]} of ${ingredient}`}
               </li>
             ))}
-          </ol>
+          </ul>
           <p data-testid="instructions">
             Intruções de preparo:
             <br />
@@ -59,9 +59,7 @@ export default function FoodRecipeDetails() {
 
           <button type="button" data-testid="start-recipe-btn">INICIAR RECEITA</button>
 
-          <div>
-            <div data-testid={ `${0}-recomendation-card` }>RECEITA RECOMENDADA 1</div>
-          </div>
+          <Carrousel url={ DRINK_URLS.NAME } />
         </div>
       ) : <Loading />}
     </div>
