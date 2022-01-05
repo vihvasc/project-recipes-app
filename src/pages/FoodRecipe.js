@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import fetchAPI from '../services/fetchApi';
 
+const copy = require('clipboard-copy');
+
 function FoodRecipe() {
   const { pathname } = useLocation();
 
   const { recipeId } = useParams();
+
+  const history = useHistory();
 
   const [recipeInfo, setRecipeInfo] = useState({});
   const { strMeal,
@@ -78,8 +82,15 @@ function FoodRecipe() {
       <div>
         <div>
           <h1 data-testid="recipe-title">{ strMeal }</h1>
-          <button type="button">
-            <img data-testid="share-btn" src={ shareIcon } alt="Profile-icon" />
+          <button
+            data-testid="share-btn"
+            type="button"
+            onClick={ () => {
+              copy(pathname);
+              return <p>Link copiado</p>;
+            } }
+          >
+            <img src={ shareIcon } alt="Profile-icon" />
           </button>
           <button type="button">
             <img data-testid="favorite-btn" src={ whiteHeartIcon } alt="Profile-icon" />
@@ -109,21 +120,21 @@ function FoodRecipe() {
         data-testid="video"
       />
       <h2>Recomendadas</h2>
-      <Carousel interval={ null }>
+      <Carousel interval={ null } style={ { marginBottom: '3rem' } }>
         <Carousel.Item>
-          <div style={ { display: 'flex' } }>
+          <div style={ { display: 'flex', justifyContent: 'center' } }>
             { recommendationsCards[0] }
             { recommendationsCards[1] }
           </div>
         </Carousel.Item>
         <Carousel.Item>
-          <div style={ { display: 'flex' } }>
+          <div style={ { display: 'flex', justifyContent: 'center' } }>
             { recommendationsCards[2] }
             { recommendationsCards[3] }
           </div>
         </Carousel.Item>
         <Carousel.Item>
-          <div style={ { display: 'flex' } }>
+          <div style={ { display: 'flex', justifyContent: 'center' } }>
             { recommendationsCards[4] }
             { recommendationsCards[5] }
           </div>
@@ -133,6 +144,7 @@ function FoodRecipe() {
         type="button"
         data-testid="start-recipe-btn"
         className="bottom-fixed"
+        onClick={ () => history.push(`/comidas/${recipeId}/in-progress`) }
       >
         Iniciar Receita
       </button>

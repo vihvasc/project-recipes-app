@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import fetchAPI from '../services/fetchApi';
 
+const copy = require('clipboard-copy');
+
 function DrinkRecipe() {
   const { pathname } = useLocation();
+
   const { recipeId } = useParams();
+
+  const history = useHistory();
+
   const [recipeInfo, setRecipeInfo] = useState({});
   const { strDrink,
     strAlcoholic,
     strDrinkThumb,
     strInstructions } = recipeInfo;
+
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
@@ -74,8 +81,15 @@ function DrinkRecipe() {
       <div>
         <div>
           <h1 data-testid="recipe-title">{ strDrink }</h1>
-          <button type="button">
-            <img data-testid="share-btn" src={ shareIcon } alt="Profile-icon" />
+          <button
+            data-testid="share-btn"
+            type="button"
+            onClick={ () => {
+              copy(pathname);
+              return <p>Link copiado!</p>;
+            } }
+          >
+            <img src={ shareIcon } alt="Profile-icon" />
           </button>
           <button type="button">
             <img data-testid="favorite-btn" src={ whiteHeartIcon } alt="Profile-icon" />
@@ -97,21 +111,21 @@ function DrinkRecipe() {
       <h2>Instructions</h2>
       <p data-testid="instructions">{ strInstructions }</p>
       <h2>Recomendadas</h2>
-      <Carousel interval={ null }>
+      <Carousel interval={ null } style={ { marginBottom: '3rem' } }>
         <Carousel.Item>
-          <div style={ { display: 'flex' } }>
+          <div style={ { display: 'flex', justifyContent: 'center' } }>
             { recommendationsCards[0] }
             { recommendationsCards[1] }
           </div>
         </Carousel.Item>
         <Carousel.Item>
-          <div style={ { display: 'flex' } }>
+          <div style={ { display: 'flex', justifyContent: 'center' } }>
             { recommendationsCards[2] }
             { recommendationsCards[3] }
           </div>
         </Carousel.Item>
         <Carousel.Item>
-          <div style={ { display: 'flex' } }>
+          <div style={ { display: 'flex', justifyContent: 'center' } }>
             { recommendationsCards[4] }
             { recommendationsCards[5] }
           </div>
@@ -121,6 +135,7 @@ function DrinkRecipe() {
         type="button"
         data-testid="start-recipe-btn"
         className="bottom-fixed"
+        onClick={ () => history.push(`/bebidas/${recipeId}/in-progress`) }
       >
         Iniciar Receita
       </button>
