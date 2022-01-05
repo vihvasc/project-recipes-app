@@ -7,7 +7,7 @@ export default function ExploreFoodsByOrigin() {
     <>
       <Header title="Explorar Origem" />
       <div>
-        ExploreFoodsByOrigin
+        ExploreFoodsByLocation
       </div>
       <Footer />
     </>
