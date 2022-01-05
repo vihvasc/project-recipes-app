@@ -1,11 +1,37 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import RecipeCards from '../components/RecipeCards';
+import RecipesContext from '../context/RecipesContext';
+import { fetchMeals } from '../services/fetchRecipes';
 
 function Foods() {
+  const { meals, setMeals } = useContext(RecipesContext);
+
+  useEffect(() => {
+    fetchMeals(setMeals);
+  }, [setMeals]);
+
+  const MAX_RECIPES = 12;
+
+  console.log(meals);
   return (
+
     <div>
       <Header pageTitle="Comidas" searchBtn />
+      <div>
+        { meals && meals.slice(0, MAX_RECIPES).map((recipe, index) => (
+          <Link to={ `/comidas/${recipe.idMeal}` } key={ index }>
+            <RecipeCards
+              key={ index }
+              index={ index }
+              recipe={ recipe }
+            />
+          </Link>
+        )) }
+      </div>
+
       <Footer />
     </div>
   );
