@@ -13,16 +13,40 @@ function FoodRecipe() {
     strMealThumb,
     strInstructions,
     strYoutube } = recipeInfo;
+  const [ingredients, setIngredients] = useState([]);
+  const [measures, setMeasures] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchMeal() {
       const apiReturn = await fetchAPI('receita', recipeId, pathname);
-      console.log(apiReturn.meals[0]);
       setRecipeInfo(apiReturn.meals[0]);
+      setIngredients(Object.entries(apiReturn.meals[0])
+        .filter((att) => att[0].includes('Ingredient') && att[1])
+        .map((att) => att[1]));
+      setMeasures(Object.entries(apiReturn.meals[0])
+        .filter((att) => att[0].includes('Measure') && att[1])
+        .map((att) => att[1]));
     }
 
-    fetchData();
+    fetchMeal();
   }, [pathname, recipeId]);
+
+  useEffect(() => {
+    async function fetchRecommendedDrinks() {
+      const apiReturn = await fetchAPI('nome', '', 'bebidas');
+      const maxRecommendations = 6;
+      setRecommendations(apiReturn.drinks
+        .filter((_drink, index) => index < maxRecommendations)
+        .map(({ strDrinkThumb, strDrink, strAlcoholic }) => ({
+          thumb: strDrinkThumb,
+          title: strDrink,
+          category: strAlcoholic,
+        })));
+    }
+
+    fetchRecommendedDrinks();
+  }, []);
 
   return (
     <div>
@@ -40,9 +64,16 @@ function FoodRecipe() {
         <h3 data-testid="recipe-category">{ strCategory }</h3>
       </div>
       <h2>Ingredients</h2>
-      {/* <ul>
-        <li data-testid={ `${index}-ingredient-and-measure` }>a</li>
-      </ul> */}
+      <ul>
+        { ingredients.map((ingredient, index) => (
+          <li
+            key={ `${index}-ingredient` }
+            data-testid={ `${index}-ingredient-name-and-measure` }
+          >
+            { `${ingredient} ${measures[index]}` }
+          </li>
+        )) }
+      </ul>
       <h2>Instructions</h2>
       <p data-testid="instructions">{ strInstructions }</p>
       <h2>Vídeo</h2>
@@ -54,7 +85,16 @@ function FoodRecipe() {
         data-testid="video"
       />
       <h2>Recomendadas</h2>
-      {/* <div data-testid={ `${index}-recommendation-card` }>a</div> */}
+      { recommendations.map(({ thumb, title, category }, index) => (
+        <div
+          key={ `${index}-recommendation` }
+          data-testid={ `${index}-recomendation-card` }
+        >
+          <img src={ thumb } alt={ title } />
+          <h5>{ category }</h5>
+          <h3 data-testid={ `${index}-recomendation-title` }>{ title }</h3>
+        </div>
+      )) }
       <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
     </div>
   );
