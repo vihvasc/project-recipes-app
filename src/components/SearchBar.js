@@ -1,52 +1,31 @@
-import PropTypes, { string } from 'prop-types';
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import fetchAPI from '../services/fetchApi';
 
-class SearchBar extends Component {
-  constructor() {
-    super();
+function SearchBar({ pageTitle }) {
+  const [filters, setFilters] = useState({ radio: '', input: '' });
+  const { radio, input } = filters;
 
-    this.state = {
-      radio: '',
-      data: [],
-      input: '',
-    };
+  const history = useHistory();
 
-    this.handleRadios = this.handleRadios.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  function handleChange({ target }) {
+    const { name, value } = target;
+    setFilters({ ...filters, [name]: value });
   }
 
-  handleRadios({ target }) {
-    this.setState({
-      radio: target.value,
-    });
-  }
-
-  handleChange({ target }) {
-    this.setState({
-      input: target.value,
-    });
-  }
-
-  async handleSubmit(e) {
-    const { radio, input, data } = this.state;
-    const { pageTitle, history } = this.props;
-    const lowerCaseTitle = pageTitle.toLowerCase();
+  async function handleSubmit(e) {
     e.preventDefault();
+
+    const lowerCaseTitle = pageTitle.toLowerCase();
 
     if ((radio === 'primeira') && (input.length !== 1)) {
       return global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
     const apiReturn = await fetchAPI(radio, input, lowerCaseTitle);
-    // console.log(apiReturn);
     const apiReturnArr = Object.values(apiReturn)[0];
-    this.setState({
-      data: apiReturnArr,
-    });
+    console.log(apiReturnArr);
     // const { meals, drinks } = apiReturn;
-    console.log(data);
 
     if (apiReturnArr === null) {
       // console.log('chegou null');
@@ -66,58 +45,58 @@ class SearchBar extends Component {
     }
   }
 
-  render() {
-    const { input } = this.state;
-    return (
-      <form onSubmit={ this.handleSubmit }>
+  return (
+    <form onSubmit={ handleSubmit }>
+      <input
+        name="input"
+        data-testid="search-input"
+        type="text"
+        value={ input }
+        onChange={ handleChange }
+      />
+      <label htmlFor="ingrediente">
         <input
-          data-testid="search-input"
-          type="text"
-          value={ input }
-          onChange={ this.handleChange }
+          type="radio"
+          name="radio"
+          value="ingrediente"
+          id="ingrediente"
+          data-testid="ingredient-search-radio"
+          onChange={ handleChange }
+          checked={ radio === 'ingrediente' }
         />
-        <label htmlFor="ingrediente">
-          <input
-            type="radio"
-            value="ingrediente"
-            id="ingrediente"
-            data-testid="ingredient-search-radio"
-            name="selection"
-            onChange={ this.handleRadios }
-          />
-          Ingrediente
-        </label>
-        <label htmlFor="nome">
-          <input
-            type="radio"
-            value="nome"
-            id="nome"
-            data-testid="name-search-radio"
-            name="selection"
-            onChange={ this.handleRadios }
-          />
-          Nome
-        </label>
-        <label htmlFor="primeira">
-          <input
-            type="radio"
-            value="primeira"
-            id="primeira letra"
-            data-testid="first-letter-search-radio"
-            name="selection"
-            onChange={ this.handleRadios }
-          />
-          Primeira Letra
-        </label>
-        <button type="submit" data-testid="exec-search-btn">Buscar</button>
-      </form>
-    );
-  }
+        Ingrediente
+      </label>
+      <label htmlFor="nome">
+        <input
+          type="radio"
+          name="radio"
+          value="nome"
+          id="nome"
+          data-testid="name-search-radio"
+          onChange={ handleChange }
+          checked={ radio === 'nome' }
+        />
+        Nome
+      </label>
+      <label htmlFor="primeira">
+        <input
+          type="radio"
+          name="radio"
+          value="primeira"
+          id="primeira letra"
+          data-testid="first-letter-search-radio"
+          onChange={ handleChange }
+          checked={ radio === 'primeira' }
+        />
+        Primeira Letra
+      </label>
+      <button type="submit" data-testid="exec-search-btn">Buscar</button>
+    </form>
+  );
 }
 
 SearchBar.propTypes = {
   pageTitle: PropTypes.string.isRequired,
-  history: PropTypes.objectOf(string).isRequired,
 };
 
-export default withRouter(SearchBar);
+export default SearchBar;
