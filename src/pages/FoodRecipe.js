@@ -1,21 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
+import Carousel from 'react-bootstrap/Carousel';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import fetchAPI from '../services/fetchApi';
 
 function FoodRecipe() {
   const { pathname } = useLocation();
+
   const { recipeId } = useParams();
+
   const [recipeInfo, setRecipeInfo] = useState({});
   const { strMeal,
     strCategory,
     strMealThumb,
     strInstructions,
     strYoutube } = recipeInfo;
+
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const recommendationsCards = recommendations
+    .map(({ thumb, title, category }, index) => (
+      <Card
+        key={ `${index}-recommendation` }
+        style={ { width: '18rem' } }
+        data-testid={ `${index}-recomendation-card` }
+      >
+        <Card.Img variant="top" src={ thumb } />
+        <Card.Body>
+          <Card.Title
+            data-testid={ `${index}-recomendation-title` }
+          >
+            { title }
+          </Card.Title>
+          <Card.Text>{ category }</Card.Text>
+        </Card.Body>
+      </Card>
+    ));
+
+  const maxRecommendations = 6;
 
   useEffect(() => {
     async function fetchMeal() {
@@ -35,7 +60,6 @@ function FoodRecipe() {
   useEffect(() => {
     async function fetchRecommendedDrinks() {
       const apiReturn = await fetchAPI('nome', '', 'bebidas');
-      const maxRecommendations = 6;
       setRecommendations(apiReturn.drinks
         .filter((_drink, index) => index < maxRecommendations)
         .map(({ strDrinkThumb, strDrink, strAlcoholic }) => ({
@@ -85,17 +109,33 @@ function FoodRecipe() {
         data-testid="video"
       />
       <h2>Recomendadas</h2>
-      { recommendations.map(({ thumb, title, category }, index) => (
-        <div
-          key={ `${index}-recommendation` }
-          data-testid={ `${index}-recomendation-card` }
-        >
-          <img src={ thumb } alt={ title } />
-          <h5>{ category }</h5>
-          <h3 data-testid={ `${index}-recomendation-title` }>{ title }</h3>
-        </div>
-      )) }
-      <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
+      <Carousel interval={ null }>
+        <Carousel.Item>
+          <div style={ { display: 'flex' } }>
+            { recommendationsCards[0] }
+            { recommendationsCards[1] }
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div style={ { display: 'flex' } }>
+            { recommendationsCards[2] }
+            { recommendationsCards[3] }
+          </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div style={ { display: 'flex' } }>
+            { recommendationsCards[4] }
+            { recommendationsCards[5] }
+          </div>
+        </Carousel.Item>
+      </Carousel>
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        className="bottom-fixed"
+      >
+        Iniciar Receita
+      </button>
     </div>
   );
 }
