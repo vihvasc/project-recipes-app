@@ -34,7 +34,6 @@ export default async function fetchAPI(type, value, location) {
     data = await response.json();
     break;
   case 'first-letter':
-    // console.log('chegou first letter comida');
     response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${value}`);
     data = await response.json();
     break;
@@ -43,4 +42,34 @@ export default async function fetchAPI(type, value, location) {
   }
 
   return Object.values(data)[0];
+}
+
+// Busca por categoria
+export async function fetchByCategory(category, type) {
+  if (type === '/bebidas') {
+    const drinkResponse = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+    const drinkData = await drinkResponse.json();
+    return Object.values(drinkData)[0];
+  }
+
+  const mealResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+
+  const mealData = await mealResponse.json();
+  return Object.values(mealData)[0];
+}
+
+// Busca aleatória
+// https://www.themealdb.com/api/json/v1/1/random.php
+
+export async function randomFetch(type) {
+  if (type.includes('/bebidas')) {
+    const drinkResponse = await fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php');
+    const drinkData = await drinkResponse.json();
+    return Object.values(drinkData)[0];
+  }
+
+  const mealResponse = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+
+  const mealData = await mealResponse.json();
+  return Object.values(mealData)[0];
 }

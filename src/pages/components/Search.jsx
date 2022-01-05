@@ -10,13 +10,13 @@ function Search() {
   const oneLetter = useRef(null);
   const [query, setQuery] = useState('');
   const [type, setType] = useState(types[0]);
-  const { data, setData } = useContext(AppContext);
-  console.log('data ao renderizar o Search:', data);
+  const { setData } = useContext(AppContext);
 
   async function handleClick() {
     if (oneLetter.current.checked && query.length > 1) {
       return global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
+
     const APIData = await fetchAPI(type, query, history.location.pathname);
     setData(APIData);
 
