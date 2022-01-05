@@ -1,55 +1,39 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-class Header extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isSearching: false,
-    };
+function Header({ pageTitle, searchBtn }) {
+  const [isSearching, setIsSearching] = useState(false);
 
-    this.handleSearchClick = this.handleSearchClick.bind(this);
+  function handleSearchClick() {
+    setIsSearching(!isSearching);
   }
 
-  handleSearchClick() {
-    const { isSearching } = this.state;
-    if (isSearching === false) {
-      this.setState({ isSearching: true });
-    } else {
-      this.setState({ isSearching: false });
-    }
-  }
-
-  render() {
-    const { pageTitle, searchBtn } = this.props;
-    const { isSearching } = this.state;
-    return (
-      <div>
-        <Link to="/perfil">
-          <img data-testid="profile-top-btn" src={ profileIcon } alt="Profile-icon" />
-        </Link>
-        <h1 data-testid="page-title">{ pageTitle }</h1>
-        { searchBtn ? (
-          <button
-            id="search-button"
-            type="button"
-            onClick={ this.handleSearchClick }
-          >
-            <img
-              src={ searchIcon }
-              alt="Botão de procura"
-              data-testid="search-top-btn"
-            />
-          </button>)
-          : null }
-        { isSearching ? <SearchBar /> : null }
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Link to="/perfil">
+        <img data-testid="profile-top-btn" src={ profileIcon } alt="Profile-icon" />
+      </Link>
+      <h1 data-testid="page-title">{ pageTitle }</h1>
+      { searchBtn ? (
+        <button
+          id="search-button"
+          type="button"
+          onClick={ handleSearchClick }
+        >
+          <img
+            src={ searchIcon }
+            alt="Botão de procura"
+            data-testid="search-top-btn"
+          />
+        </button>)
+        : null }
+      { isSearching ? <SearchBar /> : null }
+    </div>
+  );
 }
 
 Header.propTypes = {
