@@ -4,9 +4,12 @@ import RecipesContext from './RecipesContext';
 import { fetchMeals, fetchDrinks } from '../services/fetchRecipes';
 
 function Provider({ children }) {
+  const [data, setData] = useState([]);
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
-  const contextValue = {
+  const context = {
+    data,
+    setData,
     meals,
     setMeals,
     drinks,
@@ -22,7 +25,7 @@ function Provider({ children }) {
   }, [setDrinks]);
 
   return (
-    <RecipesContext.Provider value={ contextValue }>
+    <RecipesContext.Provider value={ context }>
       { children }
     </RecipesContext.Provider>
   );

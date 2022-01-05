@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RecipeCards from '../components/RecipeCards';
 import RecipesContext from '../context/RecipesContext';
+import CardFoods from '../components/CardFoods';
 
 function Foods() {
   const { meals } = useContext(RecipesContext);
@@ -25,7 +26,7 @@ function Foods() {
           </Link>
         )) }
       </div>
-
+      <CardFoods />
       <Footer />
     </div>
   );
