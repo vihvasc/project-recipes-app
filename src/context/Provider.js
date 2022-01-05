@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RecipesContext from './RecipesContext';
+import { fetchMeals, fetchDrinks } from '../services/fetchRecipes';
 
 function Provider({ children }) {
   const [meals, setMeals] = useState([]);
@@ -11,6 +12,14 @@ function Provider({ children }) {
     drinks,
     setDrinks,
   };
+
+  useEffect(() => {
+    fetchMeals(setMeals);
+  }, [setMeals]);
+
+  useEffect(() => {
+    fetchDrinks(setDrinks);
+  }, [setDrinks]);
 
   return (
     <RecipesContext.Provider value={ contextValue }>

@@ -1,20 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RecipeCards from '../components/RecipeCards';
 import RecipesContext from '../context/RecipesContext';
-import { fetchMeals } from '../services/fetchRecipes';
 
 function Foods() {
-  const { meals, setMeals } = useContext(RecipesContext);
-
-  useEffect(() => {
-    fetchMeals(setMeals);
-  }, [setMeals]);
+  const { meals } = useContext(RecipesContext);
 
   const MAX_RECIPES = 12;
-
   console.log(meals);
   return (
 

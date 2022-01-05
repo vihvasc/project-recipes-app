@@ -1,17 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RecipesContext from '../context/RecipesContext';
 import RecipeCards from '../components/RecipeCards';
-import { fetchDrinks } from '../services/fetchRecipes';
 
 function Drinks() {
-  const { drinks, setDrinks } = useContext(RecipesContext);
-
-  useEffect(() => {
-    fetchDrinks(setDrinks);
-  }, [setDrinks]);
+  const { drinks } = useContext(RecipesContext);
 
   const MAX_RECIPES = 12;
 

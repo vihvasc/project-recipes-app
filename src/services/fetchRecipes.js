@@ -8,5 +8,4 @@ export async function fetchMeals(setMeals) {
   const result = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=').then((resp) => resp.json());
   const { meals } = result;
   setMeals(meals);
-  console.log(meals);
 }
