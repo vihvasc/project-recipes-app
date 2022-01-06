@@ -67,12 +67,15 @@
   }
 }
 
-.footer {
+.bottom-fixed {
   bottom: 0;
+  position: fixed;
+}
+
+.footer {
   display: flex;
   justify-content: space-evenly;
   margin-top: 1rem;
   padding: 1rem;
-  position: fixed;
   width: 100%;
 }
