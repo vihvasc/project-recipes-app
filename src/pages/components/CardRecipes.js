@@ -5,13 +5,13 @@ import AppContext from '../../context/AppContext';
 import { fetchByCategory } from '../helpers/fetchAPI';
 import Card from './Card';
 
-export default function CardRecipes({ url }) {
+export default function CardRecipes({ url, maxLength }) {
   const [defaultData, setDefaultData] = useState([]);
   const [categoryFilteredData, setCategoryFilteredData] = useState([]);
   const { data, setData, selectedCategory } = useContext(AppContext);
   const history = useHistory();
   console.log(history);
-  const MAX_LENGTH = 12;
+  const MAX_LENGTH = maxLength;
 
   useEffect(() => {
     async function doFetch() {

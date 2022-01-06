@@ -17,7 +17,7 @@ export default function ExploreFoods() {
     doRandomFetch();
   }, [history.location.pathname]);
 
-  console.log(randomFetchData);
+  console.log('random', randomFetchData);
 
   return (
     <>
