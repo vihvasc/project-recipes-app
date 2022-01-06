@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams, useHistory } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import fetchApi from '../services/fetchApi';
-
-const copy = require('clipboard-copy');
+import ShareButton from '../components/ShareButton';
+import FavoriteButton from '../components/FavoriteButton';
 
 function DrinkRecipe() {
   const { pathname } = useLocation();
@@ -81,19 +79,10 @@ function DrinkRecipe() {
       <div>
         <div>
           <h1 data-testid="recipe-title">{ strDrink }</h1>
-          <button
-            data-testid="share-btn"
-            type="button"
-            onClick={ () => {
-              copy(pathname);
-              return <p>Link copiado!</p>;
-            } }
-          >
-            <img src={ shareIcon } alt="Profile-icon" />
-          </button>
-          <button type="button">
-            <img data-testid="favorite-btn" src={ whiteHeartIcon } alt="Profile-icon" />
-          </button>
+          <div className="interactive-buttons">
+            <ShareButton pathname={ pathname } />
+            <FavoriteButton />
+          </div>
         </div>
         <h3 data-testid="recipe-category">{ strAlcoholic }</h3>
       </div>
