@@ -79,3 +79,14 @@
   padding: 1rem;
   width: 100%;
 }
+
+.interactive-buttons {
+  align-items: top;
+  display: flex;
+}
+
+/* .share-button {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+} */
