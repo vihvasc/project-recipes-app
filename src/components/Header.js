@@ -31,7 +31,7 @@ function Header({ pageTitle, searchBtn }) {
           />
         </button>)
         : null }
-      { isSearching ? <SearchBar pageTitle={ pageTitle } /> : null }
+      { isSearching ? <SearchBar /> : null }
     </div>
   );
 }

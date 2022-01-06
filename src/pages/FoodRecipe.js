@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import fetchAPI from '../services/fetchApi';
+import fetchApi from '../services/fetchApi';
 
 const copy = require('clipboard-copy');
 
@@ -48,7 +48,7 @@ function FoodRecipe() {
 
   useEffect(() => {
     async function fetchMeal() {
-      const apiReturn = await fetchAPI('receita', recipeId, pathname);
+      const apiReturn = await fetchApi('receita', recipeId, pathname);
       setRecipeInfo(apiReturn.meals[0]);
       setIngredients(Object.entries(apiReturn.meals[0])
         .filter((att) => att[0].includes('Ingredient') && att[1])

@@ -1,13 +1,16 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import fetchAPI from '../services/fetchApi';
+import React, { useState, useContext } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import RecipesContext from '../context/RecipesContext';
+import fetchApi from '../services/fetchApi';
 
-function SearchBar({ pageTitle }) {
+function SearchBar() {
   const [filters, setFilters] = useState({ radio: '', input: '' });
   const { radio, input } = filters;
 
   const history = useHistory();
+  const location = useLocation();
+
+  const { setData } = useContext(RecipesContext);
 
   function handleChange({ target }) {
     const { name, value } = target;
@@ -17,14 +20,12 @@ function SearchBar({ pageTitle }) {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const lowerCaseTitle = pageTitle.toLowerCase();
-
     if ((radio === 'primeira') && (input.length !== 1)) {
       return global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
-    const apiReturn = await fetchAPI(radio, input, lowerCaseTitle);
+    const apiReturn = await fetchApi(radio, input, location.pathname);
     const apiReturnArr = Object.values(apiReturn)[0];
-    console.log(apiReturnArr);
+    setData(apiReturnArr);
     // const { meals, drinks } = apiReturn;
 
     if (apiReturnArr === null) {
@@ -94,9 +95,5 @@ function SearchBar({ pageTitle }) {
     </form>
   );
 }
-
-SearchBar.propTypes = {
-  pageTitle: PropTypes.string.isRequired,
-};
 
 export default SearchBar;
