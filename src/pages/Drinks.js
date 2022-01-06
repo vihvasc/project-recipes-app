@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RecipesContext from '../context/RecipesContext';
@@ -24,11 +24,12 @@ function Drinks() {
     const MAX_RECIPES = 12;
 
     return recipes.slice(0, MAX_RECIPES).map((recipe, index) => (
-      <RecipeCard
-        key={ recipe.idDrink }
-        recipe={ recipe }
-        index={ index }
-      />
+      <Link to={ `/bebidas/${recipe.idDrink}` } key={ recipe.idDrink }>
+        <RecipeCard
+          recipe={ recipe }
+          index={ index }
+        />
+      </Link>
     ));
   }
 
@@ -36,7 +37,7 @@ function Drinks() {
     <div>
       <Header pageTitle="Bebidas" searchBtn />
       <div>
-        { data.length > 0 ? displayRecipes(data) : displayRecipes(drinks) }
+        { data && data.length > 0 ? displayRecipes(data) : displayRecipes(drinks) }
       </div>
       <Footer />
     </div>

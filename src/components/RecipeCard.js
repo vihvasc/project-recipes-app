@@ -6,20 +6,18 @@ export default function RecipeCard({ recipe, index }) {
   const { idMeal, strMeal, strMealThumb, idDrink, strDrink, strDrinkThumb } = recipe;
 
   return (
-    <Link to={ `/comidas/${idMeal || idDrink}` }>
-      <div data-testid={ `${index}-recipe-card` }>
-        <img
-          data-testid={ `${index}-card-img` }
-          src={ strMealThumb || strDrinkThumb }
-          alt={ strMeal || strDrink }
-        />
-        <p
-          data-testid={ `${index}-card-name` }
-        >
-          { strMeal || strDrink }
-        </p>
-      </div>
-    </Link>
+    <div data-testid={ `${index}-recipe-card` }>
+      <img
+        data-testid={ `${index}-card-img` }
+        src={ strMealThumb || strDrinkThumb }
+        alt={ strMeal || strDrink }
+      />
+      <p
+        data-testid={ `${index}-card-name` }
+      >
+        { strMeal || strDrink }
+      </p>
+    </div>
   );
 }
 
