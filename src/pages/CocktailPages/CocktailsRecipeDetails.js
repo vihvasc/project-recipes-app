@@ -1,15 +1,25 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { MEAL_URLS } from '../../consts';
 import Carrousel from '../components/Carrousel';
+import FavouriteButton from '../components/FavouriteButton';
 import Loading from '../components/Loading';
+import ShareButton from '../components/ShareButton';
 import filterObjIntoArray from '../helpers/dataManagement';
 
 export default function CockTailsRecipeDetails() {
   const { id } = useParams();
+  const history = useHistory();
+
   const [cocktail, setCocktail] = useState({});
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
+  // const [doneRecipes, setDoneRecipes] = useState([]);
+
+  if (localStorage.getItem('doneRecipes')) {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    console.log(doneRecipes);
+  }
 
   const memoizedData = useCallback(
     async () => {
@@ -21,6 +31,42 @@ export default function CockTailsRecipeDetails() {
     }, [id],
   );
 
+  const showButton = () => {
+    if (localStorage.getItem('doneRecipes')) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+      console.log(doneRecipes);
+      if (doneRecipes.some((recipeItem) => recipeItem.id === id)) {
+        return ('');
+      }
+    }
+    if (localStorage.getItem('inProgressRecipes')) {
+      const doneRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      console.log(doneRecipes);
+      if (doneRecipes.cocktails[id]) {
+        return (
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            style={ { position: 'fixed', bottom: '0' } }
+          >
+            Continuar Receita
+          </button>
+        );
+      }
+    }
+
+    return (
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        style={ { position: 'fixed', bottom: '0' } }
+        onClick={ () => history.push(`/bebidas/${id}/in-progress`) }
+      >
+        INICIAR RECEITA
+      </button>
+    );
+  };
+
   useEffect(() => {
     memoizedData();
   }, [memoizedData]);
@@ -31,8 +77,8 @@ export default function CockTailsRecipeDetails() {
         <div>
           <img src={ cocktail.strDrinkThumb } alt="" data-testid="recipe-photo" />
           <h1 data-testid="recipe-title">{ cocktail.strDrink }</h1>
-          <button type="button" data-testid="share-btn">SHARE</button>
-          <button type="button" data-testid="favorite-btn">FAVORITE</button>
+          <ShareButton />
+          <FavouriteButton id={ id } recipe={ cocktail } />
           <h3 data-testid="recipe-category">{ cocktail.strAlcoholic }</h3>
 
           <ol>
@@ -56,9 +102,9 @@ export default function CockTailsRecipeDetails() {
             <track src="" kind="captions" srcLang="en" label="English" />
           </video>
 
-          <button type="button" data-testid="start-recipe-btn">INICIAR RECEITA</button>
-
           <Carrousel url={ MEAL_URLS.NAME } />
+
+          {showButton()}
         </div>
       ) : <Loading />}
     </div>
