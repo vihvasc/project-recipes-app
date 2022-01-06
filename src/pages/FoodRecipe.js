@@ -63,7 +63,7 @@ function FoodRecipe() {
 
   useEffect(() => {
     async function fetchRecommendedDrinks() {
-      const apiReturn = await fetchAPI('nome', '', 'bebidas');
+      const apiReturn = await fetchApi('nome', '', 'bebidas');
       setRecommendations(apiReturn.drinks
         .filter((_drink, index) => index < maxRecommendations)
         .map(({ strDrinkThumb, strDrink, strAlcoholic }) => ({

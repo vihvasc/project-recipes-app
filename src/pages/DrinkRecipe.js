@@ -62,7 +62,7 @@ function DrinkRecipe() {
 
   useEffect(() => {
     async function fetchRecommendedMeals() {
-      const apiReturn = await fetchAPI('nome', '', 'comidas');
+      const apiReturn = await fetchApi('nome', '', 'comidas');
       setRecommendations(apiReturn.meals
         .filter((_meal, index) => index < maxRecommendations)
         .map(({ strMealThumb, strMeal, strCategory }) => ({
