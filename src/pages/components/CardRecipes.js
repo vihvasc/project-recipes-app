@@ -10,7 +10,6 @@ export default function CardRecipes({ url, maxLength }) {
   const [categoryFilteredData, setCategoryFilteredData] = useState([]);
   const { data, setData, selectedCategory } = useContext(AppContext);
   const history = useHistory();
-  console.log(history);
   const MAX_LENGTH = maxLength;
 
   useEffect(() => {
@@ -28,6 +27,8 @@ export default function CardRecipes({ url, maxLength }) {
     async function doCategoryFetch() {
       const path = history.location.pathname;
       const categoryData = await fetchByCategory(selectedCategory, path);
+      console.log('useEf categ', categoryData)
+
       setCategoryFilteredData(categoryData);
     }
     doCategoryFetch();
