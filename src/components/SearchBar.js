@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
-import fetchAPI from '../services/fetchApi';
+import fetchApi from '../services/fetchApi';
 
 function SearchBar() {
   const [filters, setFilters] = useState({ radio: '', input: '' });
@@ -10,7 +10,7 @@ function SearchBar() {
   const history = useHistory();
   const location = useLocation();
 
-  const { setData } = React.useContext(RecipesContext);
+  const { setData } = useContext(RecipesContext);
 
   function handleChange({ target }) {
     const { name, value } = target;
@@ -23,7 +23,7 @@ function SearchBar() {
     if ((radio === 'primeira') && (input.length !== 1)) {
       return global.alert('Sua busca deve conter somente 1 (um) caracter');
     }
-    const apiReturn = await fetchAPI(radio, input, location.pathname);
+    const apiReturn = await fetchApi(radio, input, location.pathname);
     const apiReturnArr = Object.values(apiReturn)[0];
     setData(apiReturnArr);
     // const { meals, drinks } = apiReturn;

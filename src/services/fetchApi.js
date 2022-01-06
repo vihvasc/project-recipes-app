@@ -8,7 +8,7 @@ function generateDomain(pageTitle) {
   }
 }
 
-export default async function fetchAPI(type, value, pageTitle) {
+export default async function fetchApi(type, value, pageTitle) {
   const domain = generateDomain(pageTitle);
   const queryParameter = {
     ingrediente: 'filter.php?i=',

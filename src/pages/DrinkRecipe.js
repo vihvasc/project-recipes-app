@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import fetchAPI from '../services/fetchApi';
+import fetchApi from '../services/fetchApi';
 
 function DrinkRecipe() {
   const { pathname } = useLocation();
@@ -18,7 +18,7 @@ function DrinkRecipe() {
 
   useEffect(() => {
     async function fetchDrink() {
-      const apiReturn = await fetchAPI('receita', recipeId, pathname);
+      const apiReturn = await fetchApi('receita', recipeId, pathname);
       setRecipeInfo(apiReturn.drinks[0]);
       setIngredients(Object.entries(apiReturn.drinks[0])
         .filter((att) => att[0].includes('Ingredient') && att[1])
@@ -33,7 +33,7 @@ function DrinkRecipe() {
 
   useEffect(() => {
     async function fetchRecommendedMeals() {
-      const apiReturn = await fetchAPI('nome', '', 'comidas');
+      const apiReturn = await fetchApi('nome', '', 'comidas');
       const maxRecommendations = 6;
       setRecommendations(apiReturn.meals
         .filter((_meal, index) => index < maxRecommendations)
