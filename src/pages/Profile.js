@@ -4,7 +4,8 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Profile() {
-  const { email } = JSON.parse(localStorage.getItem('user'));
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+  console.log(storedUser);
   const history = useHistory();
   function recipesDone() {
     history.push('/receitas-feitas');
@@ -23,7 +24,7 @@ function Profile() {
     <div>
       <Header pageTitle="Perfil" />
       <h2 data-testid="profile-email">
-        {email}
+        { storedUser && storedUser.email }
       </h2>
       <button
         type="button"
