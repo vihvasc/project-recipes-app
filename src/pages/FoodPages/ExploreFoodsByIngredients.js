@@ -15,16 +15,14 @@ export default function ExploreFoodsByIngredients() {
       setIngredients(foodIngredients.slice(0, 12))
     }
     doIngredientsFetch()
-  }, [])
-
-  console.log(ingredients)
+  }, [history.location.pathname])
 
   return (
     <>
       <Header title="Explorar Ingredientes" displaySearch={ false } />
       
       {ingredients.length && ingredients
-        .map((ingredient, i) => <CardIngredient ingredient={ingredient} index={i}/>)}
+        .map((ingredient, i) => <CardIngredient ingredient={ingredient} key={i}/>)}
       <Footer />
     </>
   );

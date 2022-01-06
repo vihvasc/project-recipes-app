@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
+import AppContext from '../../context/AppContext';
 import { byIngredientsFetch } from '../helpers/fetchAPI';
 
-export default function CardIngredient({ingredient: {strIngredient1, strIngredient}, index}) {
+export default function CardIngredient({ingredient: {strIngredient1, strIngredient}, key}) {
   const history = useHistory()
+  const {setDefaultData} = useContext(AppContext)
   const [dataFilteredByIngredients, setDataFilteredByIngredients] = useState([]);
 
-  // fazer o fetch e depois do café criar o link ao redor e redirecionar a pessoa para a tela principal de receitas
   useEffect(() => {
     async function fetchByIngredients() {
       const filteredData = await
@@ -14,7 +15,7 @@ export default function CardIngredient({ingredient: {strIngredient1, strIngredie
       setDataFilteredByIngredients(filteredData)
     }
     fetchByIngredients()
-  }, [])
+  }, [history.location.pathname, strIngredient1, strIngredient])
 
   function getImage() {
     if (history.location.pathname.includes('bebidas')) {
@@ -23,16 +24,27 @@ export default function CardIngredient({ingredient: {strIngredient1, strIngredie
     return `https://www.themealdb.com/images/ingredients/${strIngredient}.png`;
   
   }
-  console.log(dataFilteredByIngredients)
+
+  function handleClick() {
+    setDefaultData(dataFilteredByIngredients)
+    if (history.location.pathname.includes('bebidas')) {
+      history.push('/bebidas')
+    }
+    history.push('/comidas')
+
+  }
 
   return (
-    <div data-testid={`${index}-ingredient-card`}>
-      <img
+    <div data-testid={`${key}-ingredient-card`}>
+      <input
+        type="image"
         src={getImage()}
         alt={`${strIngredient || strIngredient1} thumb`}
-        data-testid={`${index}-card-img`}
+        data-testid={`${key}-card-img`}
+        onClick={() => handleClick()}
       />
-      <p data-testid={`${index}-card-name`}>{strIngredient1 || strIngredient}</p>
+
+      <p data-testid={`${key}-card-name`}>{strIngredient1 || strIngredient}</p>
     </div>
   )
 }

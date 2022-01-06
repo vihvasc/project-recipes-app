@@ -6,28 +6,26 @@ import { fetchByCategory } from '../helpers/fetchAPI';
 import Card from './Card';
 
 export default function CardRecipes({ url, maxLength }) {
-  const [defaultData, setDefaultData] = useState([]);
   const [categoryFilteredData, setCategoryFilteredData] = useState([]);
-  const { data, setData, selectedCategory } = useContext(AppContext);
+  const { data, setData, selectedCategory, defaultData, setDefaultData } = useContext(AppContext);
   const history = useHistory();
   const MAX_LENGTH = maxLength;
 
   useEffect(() => {
     async function doFetch() {
-      if (url) {
+      if (url && defaultData.length === 0) {
         const response = await fetch(url);
         const fetchData = await response.json();
         setDefaultData(Object.values(fetchData)[0]);
       }
     }
-    doFetch();
-  }, [setDefaultData, url]);
+      doFetch();
+  }, [setDefaultData, url, defaultData.length]);
 
   useEffect(() => {
     async function doCategoryFetch() {
       const path = history.location.pathname;
       const categoryData = await fetchByCategory(selectedCategory, path);
-      console.log('useEf categ', categoryData)
 
       setCategoryFilteredData(categoryData);
     }

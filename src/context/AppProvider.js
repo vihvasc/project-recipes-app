@@ -4,6 +4,7 @@ import AppContext from './AppContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [defaultData, setDefaultData] = useState([]);
   const [foodCategories, setFoodCategories] = useState({});
   const [drinkCategories, setDrinkCategories] = useState({});
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -30,6 +31,8 @@ function Provider({ children }) {
       value={ {
         data,
         setData,
+        defaultData,
+        setDefaultData,
         foodCategories,
         drinkCategories,
         selectedCategory,
