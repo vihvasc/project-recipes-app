@@ -17,8 +17,6 @@ export default function ExploreFoods() {
     doRandomFetch();
   }, [history.location.pathname]);
 
-  console.log('random', randomFetchData);
-
   return (
     <>
       <Header title="Explorar Comidas" displaySearch={ false } />

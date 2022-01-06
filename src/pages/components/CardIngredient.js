@@ -3,10 +3,16 @@ import { useHistory } from 'react-router-dom';
 import AppContext from '../../context/AppContext';
 import { byIngredientsFetch } from '../helpers/fetchAPI';
 
-export default function CardIngredient({ingredient: {strIngredient1, strIngredient}, key}) {
+export default function CardIngredient({ ingredient: { strIngredient1, strIngredient },
+  key, index }) {
   const history = useHistory()
   const {setDefaultData} = useContext(AppContext)
   const [dataFilteredByIngredients, setDataFilteredByIngredients] = useState([]);
+
+
+  //FIXME: Verificar o motivo do por quê estes valores estão chegando como undefined, daí quebra os requisitos que não acham o datatestId.
+  console.log(key)
+  console.log(index)
 
   useEffect(() => {
     async function fetchByIngredients() {
@@ -35,16 +41,16 @@ export default function CardIngredient({ingredient: {strIngredient1, strIngredie
   }
 
   return (
-    <div data-testid={`${key}-ingredient-card`}>
+    <div data-testid={`${index}-ingredient-card`}>
       <input
         type="image"
         src={getImage()}
         alt={`${strIngredient || strIngredient1} thumb`}
-        data-testid={`${key}-card-img`}
+        data-testid={`${index}-card-img`}
         onClick={() => handleClick()}
       />
 
-      <p data-testid={`${key}-card-name`}>{strIngredient1 || strIngredient}</p>
+      <p data-testid={`${index}-card-name`}>{strIngredient1 || strIngredient}</p>
     </div>
   )
 }

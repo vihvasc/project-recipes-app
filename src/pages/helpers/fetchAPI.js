@@ -4,13 +4,13 @@ export default async function fetchAPI(type, value, location) {
   let response = null;
   let data = null;
 
-  if (location.includes('bebidas')) {
+  if (location.includes('comidas')) {
     // Procura pela API de Drinks
     switch (type) {
-    // case 'ingredients':
-    //   response = await fetch(`${MEAL_URLS.INGREDIENT}${value}`);
-    //   data = await response.json();
-    //   break;
+    case 'ingredients':
+      response = await fetch(`${MEAL_URLS.BY_INGREDIENT}${value}`);
+      data = await response.json();
+      break;
     case 'name':
       response = await fetch(`${MEAL_URLS.NAME}${value}`);
       data = await response.json();
@@ -28,7 +28,7 @@ export default async function fetchAPI(type, value, location) {
   // Procura pela API de comidas
   switch (type) {
   case 'ingredients':
-    response = await fetch(`${DRINK_URLS.INGREDIENT}${value}`);
+    response = await fetch(`${DRINK_URLS.BY_INGREDIENT}${value}`);
     data = await response.json();
     break;
   case 'name':
