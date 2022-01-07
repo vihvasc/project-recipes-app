@@ -35,9 +35,9 @@ export default function FavoriteButton({ newFavorite, recipeId, dataTestid }) {
   }
 
   return (
-    <button type="button" onClick={ handleClick } data-testid={ dataTestid }>
+    <button type="button" onClick={ handleClick }>
       <img
-        data-testid="favorite-btn"
+        data-testid={ dataTestid || 'favorite-btn' }
         src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
         alt="Profile-icon"
       />
