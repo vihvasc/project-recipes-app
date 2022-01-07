@@ -31,7 +31,6 @@ export default function ShareButton({ pathname, dataTestId }) {
 }
 
 ShareButton.propTypes = {
-  dataTestid: PropTypes.string.isRequired,
   pathname: PropTypes.string.isRequired,
   dataTestId: PropTypes.string.isRequired,
 };
