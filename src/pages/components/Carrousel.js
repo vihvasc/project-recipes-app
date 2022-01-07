@@ -12,6 +12,7 @@ export default function Carrousel({ url }) {
       const APIData = await response.json();
       setRecommendations(Object.values(APIData)[0].slice(0, NUMBER_OF_RECOMMENDATIONS));
     };
+    setCarrouselIndex(0);
     getRecomments();
   }, [url]);
   return (
