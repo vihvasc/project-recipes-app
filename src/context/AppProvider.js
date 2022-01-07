@@ -4,9 +4,24 @@ import AppContext from './AppContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [recipeProgress, setRecipeProgress] = useState([]);
+
+  const setupProgress = (length) => {
+    if (recipeProgress.length === 0) {
+      setRecipeProgress(new Array(length).fill(false));
+    }
+  };
 
   return (
-    <AppContext.Provider value={ { data, setData } }>
+    <AppContext.Provider
+      value={ {
+        data,
+        setData,
+        recipeProgress,
+        setRecipeProgress,
+        setupProgress,
+      } }
+    >
       {children}
     </AppContext.Provider>
   );
