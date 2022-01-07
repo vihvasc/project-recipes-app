@@ -2,7 +2,7 @@
   background-color: #6d6da5;
   display: flex;
   justify-content: space-between;
-  margin: 20px
+  margin: 20px;
 }
 
 .search-inputs-container {
@@ -25,5 +25,5 @@ img {
 }
 
 .search-btn {
-  padding: 20px
+  padding: 20px;
 }
