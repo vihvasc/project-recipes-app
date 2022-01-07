@@ -6,7 +6,6 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
-  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const context = {
     data,
     setData,
@@ -14,8 +13,6 @@ function Provider({ children }) {
     setMeals,
     drinks,
     setDrinks,
-    favoriteRecipes,
-    setFavoriteRecipes,
   };
 
   return (

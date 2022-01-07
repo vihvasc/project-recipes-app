@@ -1,14 +1,11 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
-import RecipesContext from '../context/RecipesContext';
 
 export default function FavoriteButton({ newFavorite, recipeId }) {
   const [localFavorites, setLocalFavorites] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
-
-  const { favoriteRecipes, setFavoriteRecipes } = useContext(RecipesContext);
 
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -21,12 +18,8 @@ export default function FavoriteButton({ newFavorite, recipeId }) {
   }, [localFavorites, recipeId]);
 
   useEffect(() => {
-    setFavoriteRecipes(localFavorites);
-  }, [localFavorites, setFavoriteRecipes]);
-
-  useEffect(() => {
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-  }, [favoriteRecipes]);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(localFavorites));
+  }, [localFavorites]);
 
   function handleClick() {
     if (isFavorite) {
