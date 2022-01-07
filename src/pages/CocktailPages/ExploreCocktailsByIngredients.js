@@ -22,7 +22,7 @@ export default function ExploreCocktailsByIngredients() {
       <Header title="Explorar Ingredientes" displaySearch={ false } />
       
       {ingredients.length && ingredients
-        .map((ingredient, i) => <CardIngredient ingredient={ ingredient } key={ i } index={ i }/>)}
+        .map((ingredient, index) => <CardIngredient ingredient={ ingredient } order={ index } key={ index }/>)}
       <Footer />
     </>
   );

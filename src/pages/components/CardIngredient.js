@@ -4,15 +4,14 @@ import AppContext from '../../context/AppContext';
 import { byIngredientsFetch } from '../helpers/fetchAPI';
 
 export default function CardIngredient({ ingredient: { strIngredient1, strIngredient },
-  key, index }) {
+  order}) {
   const history = useHistory()
   const {setDefaultData} = useContext(AppContext)
   const [dataFilteredByIngredients, setDataFilteredByIngredients] = useState([]);
 
 
   //FIXME: Verificar o motivo do por quê estes valores estão chegando como undefined, daí quebra os requisitos que não acham o datatestId..
-  console.log(key)
-  console.log(index)
+  console.log(order)
 
   useEffect(() => {
     async function fetchByIngredients() {
@@ -25,9 +24,9 @@ export default function CardIngredient({ ingredient: { strIngredient1, strIngred
 
   function getImage() {
     if (history.location.pathname.includes('bebidas')) {
-    return `https://www.thecocktaildb.com/images/ingredients/${strIngredient1}.png`;
+    return `https://www.thecocktaildb.com/images/ingredients/${strIngredient1}-Small.png`;
     }
-    return `https://www.themealdb.com/images/ingredients/${strIngredient}.png`;
+    return `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png`;
   
   }
 
@@ -41,16 +40,15 @@ export default function CardIngredient({ ingredient: { strIngredient1, strIngred
   }
 
   return (
-    <div data-testid={`${index}-ingredient-card`}>
-      <input
+    <div data-testid={`${order}-ingredient-card`} onClick={() => handleClick()}>
+      <img
         type="image"
         src={getImage()}
         alt={`${strIngredient || strIngredient1} thumb`}
-        data-testid={`${index}-card-img`}
-        onClick={() => handleClick()}
+        data-testid={`${order}-card-img`}
       />
 
-      <p data-testid={`${index}-card-name`}>{strIngredient1 || strIngredient}</p>
+      <p data-testid={`${order}-card-name`}>{strIngredient1 || strIngredient}</p>
     </div>
   )
 }
