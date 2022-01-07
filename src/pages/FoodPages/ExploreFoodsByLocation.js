@@ -1,33 +1,41 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { MEAL_URLS } from '../../consts';
 import AppContext from '../../context/AppContext';
+import CardRecipes from '../components/CardRecipes';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { areaListFetch } from '../helpers/fetchAPI';
+import { areaListFetch, byAreaFetch } from '../helpers/fetchAPI';
 
 export default function ExploreFoodsByOrigin() {
   const [areasList, setAreasList] = useState([]);
+  const [noFilterData, setNoFilterData] = useState([]);
   const { setDefaultData } = useContext(AppContext);
-  const MAX_LIST_NUMBER = 12;
-
-  console.log(setDefaultData);
 
   /*
   TODO:
-  1. Fazer um setDefaultData com os dados da requisição do select escolhido
-  2. Carregar o componente CardRecipes
+  1. Corrigir erros dos requisitos 79 a 81
   */
 
   useEffect(() => {
     async function doAreaListFetch() {
       const areasListData = await areaListFetch();
-      setAreasList(areasListData.slice(0, MAX_LIST_NUMBER));
+      setAreasList(areasListData);
+      if (!noFilterData.length) {
+        setNoFilterData(areasListData);
+      }
     }
     doAreaListFetch();
-  }, []);
+  }, [noFilterData.length]);
 
-  function handleChange(e) {
-    console.log(e);
+  async function handleChange(e) {
+    if (e === 'All') {
+      setDefaultData(noFilterData);
+      return '';
+    }
+
+    const recipesByArea = await byAreaFetch(e);
+    setDefaultData(recipesByArea);
   }
 
   return (
@@ -35,11 +43,17 @@ export default function ExploreFoodsByOrigin() {
       <Header title="Explorar Origem" />
 
       <select
-        name="cars"
-        id="cars"
+        name="location-dropdown"
         data-testid="explore-by-area-dropdown"
         onChange={ ({ target }) => handleChange(target.value) }
       >
+        <option
+          value="All"
+          data-testid="All-option"
+        >
+          All
+        </option>
+
         {areasList.length && areasList.map(({ strArea }, i) => (
           <option
             value={ strArea }
@@ -48,9 +62,10 @@ export default function ExploreFoodsByOrigin() {
           >
             {strArea}
           </option>
-
         ))}
       </select>
+
+      <CardRecipes url={ MEAL_URLS.NAME } maxLength={ 12 } />
 
       <Footer />
     </>

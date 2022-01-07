@@ -6,7 +6,7 @@ export const MEAL_URLS = {
   CATEGORY: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=',
   RANDOM: 'https://www.themealdb.com/api/json/v1/1/random.php',
   AREAS_LIST: 'https://www.themealdb.com/api/json/v1/1/list.php?a=list',
-  BY_AREA: 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian',
+  BY_AREA: 'https://www.themealdb.com/api/json/v1/1/filter.php?a=',
   ID: 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=',
 };
 
