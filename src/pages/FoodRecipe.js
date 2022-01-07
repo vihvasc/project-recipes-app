@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams, useHistory } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Carousel from 'react-bootstrap/Carousel';
 import fetchApi from '../services/fetchApi';
 import ShareButton from '../components/ShareButton';
 import FavoriteButton from '../components/FavoriteButton';
+import StartOrContinueRecipeButton from '../components/StartOrContinueRecipeButton';
 
 function FoodRecipe() {
   const { pathname } = useLocation();
 
   const { recipeId } = useParams();
 
-  const history = useHistory();
-
   const [recipeInfo, setRecipeInfo] = useState({});
-  const { idMeal,
-    strMeal,
+  const { strMeal,
     strArea,
     strCategory,
     strMealThumb,
@@ -77,7 +75,7 @@ function FoodRecipe() {
   }, []);
 
   const storageObject = {
-    id: idMeal,
+    id: recipeId,
     type: 'comida',
     area: strArea,
     category: strCategory,
@@ -94,7 +92,7 @@ function FoodRecipe() {
           <h1 data-testid="recipe-title">{ strMeal }</h1>
           <div className="interactive-buttons">
             <ShareButton pathname={ pathname } />
-            <FavoriteButton newFavorite={ storageObject } recipeId={ idMeal } />
+            <FavoriteButton newFavorite={ storageObject } recipeId={ recipeId } />
           </div>
         </div>
         <h3 data-testid="recipe-category">{ strCategory }</h3>
@@ -141,14 +139,7 @@ function FoodRecipe() {
           </div>
         </Carousel.Item>
       </Carousel>
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="bottom-fixed"
-        onClick={ () => history.push(`/comidas/${recipeId}/in-progress`) }
-      >
-        Iniciar Receita
-      </button>
+      <StartOrContinueRecipeButton pathname={ pathname } recipeId={ recipeId } />
     </div>
   );
 }
