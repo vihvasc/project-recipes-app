@@ -3,10 +3,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../../context/AppContext';
 import Card from './Card';
 
-export default function CardRecipes({ url }) {
+export default function CardRecipes({ url, maxLength }) {
   const [defaultData, setDefaultData] = useState([]);
   const { data } = useContext(AppContext);
-  const MAX_LENGTH = 12;
+  const MAX_LENGTH = maxLength;
 
   useEffect(() => {
     async function doFetch() {
