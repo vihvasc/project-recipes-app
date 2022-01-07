@@ -14,7 +14,9 @@ function DrinkRecipe() {
   const history = useHistory();
 
   const [recipeInfo, setRecipeInfo] = useState({});
-  const { strDrink,
+  const { idDrink,
+    strDrink,
+    strCategory,
     strAlcoholic,
     strDrinkThumb,
     strInstructions } = recipeInfo;
@@ -63,15 +65,25 @@ function DrinkRecipe() {
       const apiReturn = await fetchApi('nome', '', 'comidas');
       setRecommendations(apiReturn.meals
         .filter((_meal, index) => index < maxRecommendations)
-        .map(({ strMealThumb, strMeal, strCategory }) => ({
+        .map(({ strMealThumb, strMeal, strCategory: strMealCategory }) => ({
           thumb: strMealThumb,
           title: strMeal,
-          category: strCategory,
+          category: strMealCategory,
         })));
     }
 
     fetchRecommendedMeals();
   }, []);
+
+  const storageObject = {
+    id: idDrink,
+    type: 'bebida',
+    area: '',
+    category: strCategory,
+    alcoholicOrNot: strAlcoholic,
+    name: strDrink,
+    image: strDrinkThumb,
+  };
 
   return (
     <div>
@@ -81,7 +93,7 @@ function DrinkRecipe() {
           <h1 data-testid="recipe-title">{ strDrink }</h1>
           <div className="interactive-buttons">
             <ShareButton pathname={ pathname } />
-            <FavoriteButton />
+            <FavoriteButton newFavorite={ storageObject } recipeId={ idDrink } />
           </div>
         </div>
         <h3 data-testid="recipe-category">{ strAlcoholic }</h3>

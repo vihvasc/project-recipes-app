@@ -14,7 +14,9 @@ function FoodRecipe() {
   const history = useHistory();
 
   const [recipeInfo, setRecipeInfo] = useState({});
-  const { strMeal,
+  const { idMeal,
+    strMeal,
+    strArea,
     strCategory,
     strMealThumb,
     strInstructions,
@@ -74,6 +76,16 @@ function FoodRecipe() {
     fetchRecommendedDrinks();
   }, []);
 
+  const storageObject = {
+    id: idMeal,
+    type: 'comida',
+    area: strArea,
+    category: strCategory,
+    alcoholicOrNot: '',
+    name: strMeal,
+    image: strMealThumb,
+  };
+
   return (
     <div>
       <img src={ strMealThumb } alt={ strMeal } data-testid="recipe-photo" />
@@ -82,7 +94,7 @@ function FoodRecipe() {
           <h1 data-testid="recipe-title">{ strMeal }</h1>
           <div className="interactive-buttons">
             <ShareButton pathname={ pathname } />
-            <FavoriteButton />
+            <FavoriteButton newFavorite={ storageObject } recipeId={ idMeal } />
           </div>
         </div>
         <h3 data-testid="recipe-category">{ strCategory }</h3>
