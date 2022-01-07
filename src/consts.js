@@ -7,6 +7,7 @@ export const MEAL_URLS = {
   RANDOM: 'https://www.themealdb.com/api/json/v1/1/random.php',
   AREAS_LIST: 'https://www.themealdb.com/api/json/v1/1/list.php?a=list',
   BY_AREA: 'https://www.themealdb.com/api/json/v1/1/filter.php?a=Canadian',
+  ID: 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=',
 };
 
 export const DRINK_URLS = {
@@ -16,4 +17,5 @@ export const DRINK_URLS = {
   INGREDIENT: 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list',
   CATEGORY: 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=',
   RANDOM: 'https://www.thecocktaildb.com/api/json/v1/1/random.php',
+  ID: 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=',
 };

@@ -7,8 +7,10 @@ import { areaListFetch } from '../helpers/fetchAPI';
 
 export default function ExploreFoodsByOrigin() {
   const [areasList, setAreasList] = useState([]);
-  // const { setDefaultData } = useContext(AppContext);
+  const { setDefaultData } = useContext(AppContext);
   const MAX_LIST_NUMBER = 12;
+
+  console.log(setDefaultData);
 
   /*
   TODO:

@@ -25,6 +25,13 @@ function Provider({ children }) {
     }
     categoriesFetch();
   }, []);
+  const [recipeProgress, setRecipeProgress] = useState([]);
+
+  const setupProgress = (length) => {
+    if (recipeProgress.length === 0) {
+      setRecipeProgress(new Array(length).fill(false));
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -37,6 +44,9 @@ function Provider({ children }) {
         drinkCategories,
         selectedCategory,
         setSelectedCategory,
+        recipeProgress,
+        setRecipeProgress,
+        setupProgress,
       } }
     >
       {children}

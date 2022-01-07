@@ -10,9 +10,6 @@ export default function Food() {
     <>
       <Header title="Comidas" />
       <Filters />
-      <div>
-        COMIDA
-      </div>
       <CardRecipes url={ MEAL_URLS.NAME } maxLength={ 12 } />
       <Footer />
     </>
