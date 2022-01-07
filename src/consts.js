@@ -5,6 +5,7 @@ export const MEAL_URLS = {
   INGREDIENT: 'https://www.themealdb.com/api/json/v1/1/list.php?i=list',
   CATEGORY: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=',
   RANDOM: 'https://www.themealdb.com/api/json/v1/1/random.php',
+  AREAS_LIST: 'https://www.themealdb.com/api/json/v1/1/list.php?a=list',
 };
 
 export const DRINK_URLS = {

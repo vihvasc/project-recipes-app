@@ -104,3 +104,12 @@ export async function byIngredientsFetch(type, ingredient) {
   const mealData = await mealResponse.json();
   return Object.values(mealData)[0];
 }
+
+// Busca das areas/localidades disponíveis para pesquisa
+
+export async function areaListFetch() {
+  const areasResponse = await fetch(MEAL_URLS.AREAS_LIST);
+
+  const areasData = await areasResponse.json();
+  return Object.values(areasData)[0];
+}
