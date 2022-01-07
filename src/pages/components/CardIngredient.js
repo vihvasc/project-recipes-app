@@ -10,7 +10,7 @@ export default function CardIngredient({ ingredient: { strIngredient1, strIngred
   const [dataFilteredByIngredients, setDataFilteredByIngredients] = useState([]);
 
 
-  //FIXME: Verificar o motivo do por quê estes valores estão chegando como undefined, daí quebra os requisitos que não acham o datatestId.
+  //FIXME: Verificar o motivo do por quê estes valores estão chegando como undefined, daí quebra os requisitos que não acham o datatestId..
   console.log(key)
   console.log(index)
 
