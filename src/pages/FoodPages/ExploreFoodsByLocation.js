@@ -7,10 +7,10 @@ export default function ExploreFoodsByOrigin() {
     <>
       <Header title="Explorar Origem" />
 
-      <label for="cars">Choose a car:</label>
-        <select name="cars" id="cars" data-testid="explore-by-area-dropdown">
-          <option value="volvo" data-testid="${area}-option">Volvo</option>
-      </select>
+      {/* <label htmlFor="cars">Choose a car:</label>
+      <select name="cars" id="cars" data-testid="explore-by-area-dropdown">
+        <option value="volvo" data-testid="${area}-option">Volvo</option>
+      </select> */}
       <Footer />
     </>
   );

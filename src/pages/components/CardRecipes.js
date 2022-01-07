@@ -7,7 +7,8 @@ import Card from './Card';
 
 export default function CardRecipes({ url, maxLength }) {
   const [categoryFilteredData, setCategoryFilteredData] = useState([]);
-  const { data, setData, selectedCategory, defaultData, setDefaultData } = useContext(AppContext);
+  const { data, setData, selectedCategory,
+    defaultData, setDefaultData } = useContext(AppContext);
   const history = useHistory();
   const MAX_LENGTH = maxLength;
 
@@ -19,7 +20,7 @@ export default function CardRecipes({ url, maxLength }) {
         setDefaultData(Object.values(fetchData)[0]);
       }
     }
-      doFetch();
+    doFetch();
   }, [setDefaultData, url, defaultData.length]);
 
   useEffect(() => {
