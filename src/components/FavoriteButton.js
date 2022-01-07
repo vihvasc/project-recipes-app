@@ -1,24 +1,29 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import RecipesContext from '../context/RecipesContext';
 
-export default function FavoriteButton({ newFavorite, recipeId }) {
-  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
-  const [isFavorite, setIsFavorite] = useState(false);
+export default function FavoriteButton({ newFavorite, recipeId, dataTestid }) {
+  const { favoriteRecipes, setFavoriteRecipes } = useContext(RecipesContext);
+  const [isFavorite, setIsFavorite] = useState(() => {
+    if (!localStorage.getItem('favoriteRecipes')) {
+      return false;
+    }
+    const favoriteRecipe = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    return favoriteRecipe.some(({ id }) => id === recipeId);
+  });
 
-  useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    setFavoriteRecipes(storedFavorites);
-  }, []);
+  // useEffect(() => {
+  //   const storedFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  //   setFavoriteRecipes(storedFavorites);
+  // }, []);
 
   useEffect(() => {
     setIsFavorite(favoriteRecipes && favoriteRecipes.some(({ id }) => id === recipeId));
   }, [favoriteRecipes, recipeId]);
 
-  useEffect(() => {
-    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-  }, [favoriteRecipes]);
+  console.log(favoriteRecipes);
 
   function handleClick() {
     if (isFavorite) {
@@ -30,7 +35,7 @@ export default function FavoriteButton({ newFavorite, recipeId }) {
   }
 
   return (
-    <button type="button" onClick={ handleClick }>
+    <button type="button" onClick={ handleClick } data-testid={ dataTestid }>
       <img
         data-testid="favorite-btn"
         src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
@@ -41,6 +46,7 @@ export default function FavoriteButton({ newFavorite, recipeId }) {
 }
 
 FavoriteButton.propTypes = {
+  dataTestid: PropTypes.string,
   newFavorite: PropTypes.objectOf(PropTypes.string),
   recipeId: PropTypes.string,
 };
@@ -48,4 +54,5 @@ FavoriteButton.propTypes = {
 FavoriteButton.defaultProps = {
   newFavorite: {},
   recipeId: '',
+  dataTestid: '',
 };

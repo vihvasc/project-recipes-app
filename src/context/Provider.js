@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RecipesContext from './RecipesContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState(() => (localStorage
+    .getItem('favoriteRecipes') ? JSON.parse(localStorage
+      .getItem('favoriteRecipes')) : []));
   const context = {
     data,
     setData,
@@ -13,7 +16,13 @@ function Provider({ children }) {
     setMeals,
     drinks,
     setDrinks,
+    favoriteRecipes,
+    setFavoriteRecipes,
   };
+
+  useEffect(() => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  }, [favoriteRecipes]);
 
   return (
     <RecipesContext.Provider value={ context }>
