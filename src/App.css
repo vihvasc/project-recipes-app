@@ -1,7 +1,14 @@
 .page-header {
-  background-color: rgb(109, 109, 165);
+  background-color: #6d6da5;
   display: flex;
   justify-content: space-between;
+  margin: 20px
+}
+
+.search-inputs-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
 }
 
 .page-footer {
@@ -15,4 +22,8 @@
 
 img {
   max-width: 90px;
+}
+
+.search-btn {
+  padding: 20px
 }

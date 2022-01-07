@@ -25,6 +25,7 @@ export default function Header({ title, displaySearch = true }) {
         && <input
           data-testid="search-top-btn"
           type="image"
+          className="search-btn"
           alt="search top button"
           onClick={ () => setShowButton(!showButton) }
           src={ searchIcon }

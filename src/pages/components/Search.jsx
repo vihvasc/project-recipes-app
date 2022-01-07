@@ -34,7 +34,7 @@ function Search() {
   }
 
   return (
-    <div>
+    <div className="search-inputs-container">
       <input
         data-testid="search-input"
         placeholder="Digite sua busca"

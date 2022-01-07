@@ -113,3 +113,10 @@ export async function areaListFetch() {
   const areasData = await areasResponse.json();
   return Object.values(areasData)[0];
 }
+
+export async function byAreaFetch(area) {
+  const areaResponse = await fetch(`${MEAL_URLS.BY_AREA}${area}`);
+
+  const areaRecipesData = await areaResponse.json();
+  return Object.values(areaRecipesData)[0];
+}
