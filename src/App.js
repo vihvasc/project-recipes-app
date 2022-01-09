@@ -17,6 +17,7 @@ import CocktailsByIngredients from './pages/CocktailPages/ExploreCocktailsByIngr
 import DoneRecipes from './pages/Recipes/DoneRecipes';
 import FavoriteRecipes from './pages/Recipes/FavoriteRecipes';
 import Profile from './pages/Profile';
+import NotFound from './pages/components/NotFound';
 
 function App() {
   return (
@@ -96,6 +97,12 @@ function App() {
         exact
         path="/explorar/comidas/area"
         component={ ExploreFoodsByLocation }
+      />
+
+      <Route
+        exact
+        path="/explorar/bebidas/area"
+        component={ NotFound }
       />
 
       <Route

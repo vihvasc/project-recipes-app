@@ -10,11 +10,11 @@ import { areaListFetch, byAreaFetch } from '../helpers/fetchAPI';
 export default function ExploreFoodsByOrigin() {
   const [areasList, setAreasList] = useState([]);
   const [noFilterData, setNoFilterData] = useState([]);
-  const { setDefaultData } = useContext(AppContext);
+  const { defaultData, setDefaultData } = useContext(AppContext);
 
   /*
   TODO:
-  1. Corrigir erros dos requisitos 79 a 81
+  1. Corrigir erros dos requisitos 80 e 81
   */
 
   useEffect(() => {
@@ -22,11 +22,11 @@ export default function ExploreFoodsByOrigin() {
       const areasListData = await areaListFetch();
       setAreasList(areasListData);
       if (!noFilterData.length) {
-        setNoFilterData(areasListData);
+        setNoFilterData(defaultData);
       }
     }
     doAreaListFetch();
-  }, [noFilterData.length]);
+  }, [defaultData, noFilterData.length]);
 
   async function handleChange(e) {
     if (e === 'All') {

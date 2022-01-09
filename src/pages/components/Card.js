@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Card({ recipe: {
   strMealThumb, strMeal, idMeal, strDrinkThumb, strDrink, idDrink }, index }) {
-  const history = useHistory();
+  function linkTo() {
+    if (!!idDrink === true) return `/bebidas/${idDrink}`;
+    return `/comidas/${idMeal}`;
+  }
   return (
-    <Link to={ `${history.location.pathname}/${idMeal || idDrink}` }>
+    <Link to={ linkTo() }>
       <div data-testid={ `${index}-recipe-card` }>
         <p data-testid={ `${index}-card-name` }>{ strMeal || strDrink }</p>
         <img
