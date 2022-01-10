@@ -8,18 +8,25 @@ import filterArray from './Helper/dataManagement';
 import Loading from '../components/Loading';
 
 function FoodInProgress() {
+  const history = useHistory();
   const { recipeId } = useParams();
+
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
-  const history = useHistory();
-  const { setRecipeProgress } = useContext(RecipesContext);
   const [recipe, setRecipe] = useState({});
+  const { strArea,
+    strCategory,
+    strInstructions,
+    strMeal,
+    strMealThumb,
+    strYoutube } = recipe;
+
+  const { setRecipeProgress } = useContext(RecipesContext);
 
   const memoizedData = useCallback(
     async () => {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`);
       const dataDetails = await response.json();
-      // const recipes = dataDetails.meals[0];
       setRecipe(dataDetails.meals[0]);
       setIngredients(filterArray(dataDetails.meals[0], 'Ingredient'));
       setMeasures(filterArray(dataDetails.meals[0], 'Measure'));
@@ -57,15 +64,25 @@ function FoodInProgress() {
     memoizedData();
   }, [memoizedData]);
 
+  const storageObject = {
+    id: recipeId,
+    type: 'comida',
+    area: strArea,
+    category: strCategory,
+    alcoholicOrNot: '',
+    name: strMeal,
+    image: strMealThumb,
+  };
+
   return (
     <div>
       {recipe ? (
         <div>
-          <img src={ recipe.strMealThumb } alt="" data-testid="recipe-photo" />
-          <h1 data-testid="recipe-title">{ recipe.strMeal }</h1>
-          <ShareButton />
-          <FavoriteButton id={ recipeId } recipe={ recipe } />
-          <h3 data-testid="recipe-category">{ recipe.strCategory }</h3>
+          <img src={ strMealThumb } alt="" data-testid="recipe-photo" />
+          <h1 data-testid="recipe-title">{ strMeal }</h1>
+          <ShareButton pathname={ `/comidas/${recipeId}` } />
+          <FavoriteButton recipeId={ recipeId } newFavorite={ storageObject } />
+          <h3 data-testid="recipe-category">{ strCategory }</h3>
 
           <ol>
             Ingredientes:
@@ -90,12 +107,12 @@ function FoodInProgress() {
             ))}
           </ol>
           <p data-testid="instructions">
-            Intruções de preparo:
+            Instruções de preparo:
             <br />
-            {recipe.strInstructions}
+            {strInstructions}
           </p>
           <video data-testid="video" controls>
-            <source src={ recipe.strYoutube } type="video/mp4" />
+            <source src={ strYoutube } type="video/mp4" />
             <track src="" kind="captions" srcLang="en" label="English" />
           </video>
 
