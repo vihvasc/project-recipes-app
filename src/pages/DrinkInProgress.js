@@ -10,6 +10,7 @@ import Loading from '../components/Loading';
 function DrinkInProgress() {
   const { recipeId } = useParams();
   const [ingredients, setIngredients] = useState([]);
+
   const [measures, setMeasures] = useState([]);
   const history = useHistory();
   const { setRecipeProgress } = useContext(RecipesContext);
