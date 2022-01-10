@@ -16,11 +16,12 @@ export default function ShareButton({ pathname, dataTestId }) {
   return (
     <span className="share-button">
       <button
+        data-testid="share-btn"
         type="button"
         onClick={ handleClick }
       >
         <img
-          data-testid={ dataTestId || 'share-btn' }
+          data-testid={ dataTestId }
           src={ shareIcon }
           alt="Profile-icon"
         />
