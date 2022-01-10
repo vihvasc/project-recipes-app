@@ -9,6 +9,13 @@ function Provider({ children }) {
   const [favoriteRecipes, setFavoriteRecipes] = useState(() => (localStorage
     .getItem('favoriteRecipes') ? JSON.parse(localStorage
       .getItem('favoriteRecipes')) : []));
+  const [recipeProgress, setRecipeProgress] = useState([]);
+
+  const setupProgress = (length) => {
+    if (recipeProgress.length === 0) {
+      setRecipeProgress(new Array(length).fill(false));
+    }
+  };
   const context = {
     data,
     setData,
@@ -18,6 +25,9 @@ function Provider({ children }) {
     setDrinks,
     favoriteRecipes,
     setFavoriteRecipes,
+    recipeProgress,
+    setRecipeProgress,
+    setupProgress,
   };
 
   useEffect(() => {
