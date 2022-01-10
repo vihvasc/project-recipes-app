@@ -8,17 +8,19 @@ import fetchApi from '../services/fetchApi';
 
 function Drinks() {
   const { drinks, setDrinks, data } = useContext(RecipesContext);
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
 
   useEffect(() => {
     async function fetchRecipes() {
-      const apiReturn = await fetchApi('nome', '', pathname);
+      const apiReturn = state
+        ? await fetchApi('ingrediente', state.ingredient, pathname)
+        : await fetchApi('nome', '', pathname);
       const apiReturnArr = Object.values(apiReturn)[0];
       setDrinks(apiReturnArr);
     }
 
     fetchRecipes();
-  }, [pathname, setDrinks]);
+  }, [pathname, setDrinks, state]);
 
   function displayRecipes(recipes) {
     const MAX_RECIPES = 12;
