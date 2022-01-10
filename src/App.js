@@ -18,6 +18,7 @@ import ExploreFoodOrigin from './pages/ExploreFoodOrigin';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import ExploreDrinkOrigin from './pages/ExploreDrinkOrigin';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           path="/explorar/bebidas/ingredientes"
           component={ ExploreDrinkIngredients }
         />
+        <Route path="/explorar/bebidas/area" component={ ExploreDrinkOrigin } />
         <Route path="/explorar/bebidas" component={ ExploreDrinks } />
         <Route
           path="/explorar/comidas/ingredientes"
