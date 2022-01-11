@@ -5,13 +5,12 @@ import RecipesContext from '../context/RecipesContext';
 function CategoryButtons({ category }) {
   const { strCategory } = category;
 
-  const { setFilter, toggle, setToggle } = useContext(RecipesContext);
+  const { setFilter, setToggle } = useContext(RecipesContext);
   const [isToggled, setIsToggled] = useState(false);
 
   function handleFilter(e) {
     const filterValue = e.target.value;
     setIsToggled(!isToggled);
-    console.log(toggle);
     setFilter(filterValue);
   }
 

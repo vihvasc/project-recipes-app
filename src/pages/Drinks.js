@@ -18,19 +18,19 @@ function Drinks() {
     setToggle,
     toggle,
   } = useContext(RecipesContext);
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
 
   useEffect(() => {
     async function fetchRecipes() {
       const apiReturn = state
-        ? await fetchApi('ingrediente', '', pathname)
+        ? await fetchApi('ingrediente', state.ingredients, pathname)
         : await fetchApi('nome', '', pathname);
       const apiReturnArr = Object.values(apiReturn)[0];
       setDrinks(apiReturnArr);
     }
 
     fetchRecipes();
-  }, [pathname, setDrinks]);
+  }, [pathname, setDrinks, state]);
 
   useEffect(() => {
     async function fetchCategories() {
