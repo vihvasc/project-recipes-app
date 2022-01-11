@@ -24,18 +24,19 @@ function ExploreFoodIngredients() {
       { ingredients.map(({ strIngredient }, index) => (
         <Link
           key={ `${strIngredient}-card` }
-          data-testid={ `${index}-ingredient-card` }
           to={ {
             pathname: '/comidas',
             state: { ingredient: `${strIngredient}` },
           } }
         >
-          <img
-            src={ `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png ` }
-            alt={ `${strIngredient}` }
-            data-testid={ `${index}-card-img` }
-          />
-          <h4 data-testid={ `${index}-card-name` }>{ strIngredient }</h4>
+          <div data-testid={ `${index}-ingredient-card` } className="w-40 h-40">
+            <img
+              data-testid={ `${index}-card-img` }
+              src={ `https://www.themealdb.com/images/ingredients/${strIngredient}-Small.png ` }
+              alt={ `${strIngredient}` }
+            />
+            <h4 data-testid={ `${index}-card-name` }>{ strIngredient }</h4>
+          </div>
         </Link>
       )) }
       <Footer />

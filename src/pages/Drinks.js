@@ -8,7 +8,9 @@ import CategoryButtons from '../components/CategoryButtons';
 import fetchApi from '../services/fetchApi';
 
 function Drinks() {
-  const { drinks,
+  const {
+    data,
+    drinks,
     setDrinks,
     categories,
     setCategories,
@@ -23,7 +25,7 @@ function Drinks() {
   useEffect(() => {
     async function fetchRecipes() {
       const apiReturn = state
-        ? await fetchApi('ingrediente', state.ingredients, pathname)
+        ? await fetchApi('ingrediente', state.ingredient, pathname)
         : await fetchApi('nome', '', pathname);
       const apiReturnArr = Object.values(apiReturn)[0];
       setDrinks(apiReturnArr);
@@ -64,6 +66,12 @@ function Drinks() {
     ));
   }
 
+  function setDisplay() {
+    if (data && data.length > 0) return displayRecipes(data);
+    if (toggle && filteredDrinks) return displayRecipes(filteredDrinks);
+    return displayRecipes(drinks);
+  }
+
   function displayCategoryButtons(cat) {
     const MAX_CATEGORIES = 5;
 
@@ -94,8 +102,7 @@ function Drinks() {
         { categories && displayCategoryButtons(categories) }
       </section>
       <div>
-        { toggle && filteredDrinks
-          ? displayRecipes(filteredDrinks) : displayRecipes(drinks) }
+        { setDisplay() }
       </div>
       <Footer />
     </div>

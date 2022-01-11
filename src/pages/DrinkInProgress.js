@@ -101,6 +101,7 @@ function DrinkInProgress() {
                       ? JSON.parse(localStorage.getItem('recipeProgress'))[index]
                       : false
                   }
+                  style={ { textDecoration: 'none solid black' } }
                 />
                 {`${ingredient} ${measures[index]}`}
               </li>

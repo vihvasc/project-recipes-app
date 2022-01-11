@@ -8,7 +8,11 @@ import RecipesContext from '../context/RecipesContext';
 import fetchApi from '../services/fetchApi';
 
 function Foods() {
-  const { meals,
+  const { pathname, state } = useLocation();
+
+  const {
+    data,
+    meals,
     setMeals,
     categories,
     setCategories,
@@ -18,19 +22,6 @@ function Foods() {
     setToggle,
     toggle,
   } = useContext(RecipesContext);
-  const { pathname, state } = useLocation();
-
-  useEffect(() => {
-    async function fetchRecipes() {
-      const apiReturn = state
-        ? await fetchApi('ingrediente', state.ingredients, pathname)
-        : await fetchApi('nome', '', pathname);
-      const apiReturnArr = Object.values(apiReturn)[0];
-      setMeals(apiReturnArr);
-    }
-
-    fetchRecipes();
-  }, [pathname, setMeals, state]);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -41,6 +32,18 @@ function Foods() {
 
     fetchCategories();
   }, [pathname, setCategories]);
+
+  useEffect(() => {
+    async function fetchRecipes() {
+      const apiReturn = state
+        ? await fetchApi('ingrediente', state.ingredient, pathname)
+        : await fetchApi('nome', '', pathname);
+      const apiReturnArr = Object.values(apiReturn)[0];
+      setMeals(apiReturnArr);
+    }
+
+    fetchRecipes();
+  }, [pathname, setMeals, state]);
 
   useEffect(() => {
     async function fetchFilter() {
@@ -61,6 +64,12 @@ function Foods() {
         />
       </Link>
     ));
+  }
+
+  function setDisplay() {
+    if (data && data.length > 0) return displayRecipes(data);
+    if (toggle && filteredRecipes) return displayRecipes(filteredRecipes);
+    return displayRecipes(meals);
   }
 
   function displayCategoryButtons(cat) {
@@ -92,8 +101,7 @@ function Foods() {
         { categories && displayCategoryButtons(categories) }
       </section>
       <div>
-        { toggle && filteredRecipes
-          ? displayRecipes(filteredRecipes) : displayRecipes(meals) }
+        { setDisplay() }
       </div>
       <Footer />
     </div>
