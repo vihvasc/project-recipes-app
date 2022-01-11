@@ -8,12 +8,19 @@ import filterArray from './Helper/dataManagement';
 import Loading from '../components/Loading';
 
 function DrinkInProgress() {
+  const history = useHistory();
   const { recipeId } = useParams();
+
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
-  const history = useHistory();
-  const { setRecipeProgress } = useContext(RecipesContext);
   const [cocktail, setCocktail] = useState({});
+  const { strAlcoholic,
+    strCategory,
+    strInstructions,
+    strDrink,
+    strDrinkThumb } = cocktail;
+
+  const { setRecipeProgress } = useContext(RecipesContext);
 
   const memoizedData = useCallback(
     async () => {
@@ -57,15 +64,25 @@ function DrinkInProgress() {
     memoizedData();
   }, [memoizedData]);
 
+  const storageObject = {
+    id: recipeId,
+    type: 'bebida',
+    area: '',
+    category: strCategory,
+    alcoholicOrNot: strAlcoholic,
+    name: strDrink,
+    image: strDrinkThumb,
+  };
+
   return (
     <div>
       {cocktail ? (
         <div>
-          <img src={ cocktail.strDrinkThumb } alt="" data-testid="recipe-photo" />
-          <h1 data-testid="recipe-title">{ cocktail.strDrink }</h1>
-          <ShareButton />
-          <FavoriteButton id={ recipeId } recipe={ cocktail } />
-          <h3 data-testid="recipe-category">{ cocktail.strAlcoholic }</h3>
+          <img src={ strDrinkThumb } alt="" data-testid="recipe-photo" />
+          <h1 data-testid="recipe-title">{ strDrink }</h1>
+          <ShareButton pathname={ `/bebidas/${recipeId}` } />
+          <FavoriteButton recipeId={ recipeId } newFavorite={ storageObject } />
+          <h3 data-testid="recipe-category">{ strAlcoholic }</h3>
 
           <ol>
             Ingredientes:
@@ -92,12 +109,8 @@ function DrinkInProgress() {
           <p data-testid="instructions">
             Intruções de preparo:
             <br />
-            {cocktail.strInstructions}
+            {strInstructions}
           </p>
-          <video data-testid="video" controls>
-            <source src={ cocktail.strYoutube } type="video/mp4" />
-            <track src="" kind="captions" srcLang="en" label="English" />
-          </video>
 
           <Carousel.Item />
           {showButton()}

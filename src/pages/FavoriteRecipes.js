@@ -48,7 +48,7 @@ function FavoriteRecipes() {
       {
         recipes.map((recipe, index) => (
           recipe.type === 'comida' ? (
-            <div key={ recipe.id }>
+            <div key={ `meal-${recipe.id}` }>
               <Link to={ `/comidas/${recipe.id}` }>
                 <img
                   className="card-img"
@@ -71,15 +71,15 @@ function FavoriteRecipes() {
               </Link>
               <ShareButton
                 pathname={ `/comidas/${recipe.id}` }
-                dataTestid={ `${index}-horizontal-share-btn` }
+                dataTestId={ `${index}-horizontal-share-btn` }
               />
               <FavoriteButton
                 recipeId={ recipe.id }
-                dataTestid={ `${index}-horizontal-favorite-btn` }
+                dataTestId={ `${index}-horizontal-favorite-btn` }
               />
             </div>
           ) : (
-            <div key={ recipe.name }>
+            <div key={ `drink-${recipe.id}` }>
               <Link to={ `/bebidas/${recipe.id}` }>
                 <img
                   className="card-img"
@@ -102,11 +102,11 @@ function FavoriteRecipes() {
               </Link>
               <ShareButton
                 pathname={ `/bebidas/${recipe.id}` }
-                dataTestid={ `${index}-horizontal-share-btn` }
+                dataTestId={ `${index}-horizontal-share-btn` }
               />
               <FavoriteButton
                 recipeId={ recipe.id }
-                dataTestid={ `${index}-horizontal-favorite-btn` }
+                dataTestId={ `${index}-horizontal-favorite-btn` }
               />
             </div>
           )

@@ -4,7 +4,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import RecipesContext from '../context/RecipesContext';
 
-export default function FavoriteButton({ newFavorite, recipeId, dataTestid }) {
+export default function FavoriteButton({ newFavorite, recipeId, dataTestId }) {
   const { favoriteRecipes, setFavoriteRecipes } = useContext(RecipesContext);
   const [isFavorite, setIsFavorite] = useState(() => {
     if (!localStorage.getItem('favoriteRecipes')) {
@@ -14,16 +14,9 @@ export default function FavoriteButton({ newFavorite, recipeId, dataTestid }) {
     return favoriteRecipe.some(({ id }) => id === recipeId);
   });
 
-  // useEffect(() => {
-  //   const storedFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  //   setFavoriteRecipes(storedFavorites);
-  // }, []);
-
   useEffect(() => {
     setIsFavorite(favoriteRecipes && favoriteRecipes.some(({ id }) => id === recipeId));
   }, [favoriteRecipes, recipeId]);
-
-  console.log(favoriteRecipes);
 
   function handleClick() {
     if (isFavorite) {
@@ -37,7 +30,7 @@ export default function FavoriteButton({ newFavorite, recipeId, dataTestid }) {
   return (
     <button type="button" onClick={ handleClick }>
       <img
-        data-testid={ dataTestid || 'favorite-btn' }
+        data-testid={ dataTestId || 'favorite-btn' }
         src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
         alt="Profile-icon"
       />
@@ -46,13 +39,13 @@ export default function FavoriteButton({ newFavorite, recipeId, dataTestid }) {
 }
 
 FavoriteButton.propTypes = {
-  dataTestid: PropTypes.string,
+  dataTestId: PropTypes.string,
   newFavorite: PropTypes.objectOf(PropTypes.string),
   recipeId: PropTypes.string,
 };
 
 FavoriteButton.defaultProps = {
+  dataTestId: '',
   newFavorite: {},
   recipeId: '',
-  dataTestid: '',
 };

@@ -12,6 +12,7 @@ export default async function fetchApi(type, value, pageTitle) {
   const domain = generateDomain(pageTitle);
   const queryParameter = {
     ingrediente: 'filter.php?i=',
+    area: 'filter.php?a=',
     nome: 'search.php?s=',
     primeira: 'search.php?f=',
     receita: 'lookup.php?i=',
