@@ -8,6 +8,7 @@ export default function RecipeCard({ recipe, index }) {
     <div data-testid={ `${index}-recipe-card` }>
       <img
         data-testid={ `${index}-card-img` }
+        className="rounded w-40"
         src={ strMealThumb || strDrinkThumb }
         alt={ strMeal || strDrink }
       />
