@@ -8,14 +8,11 @@ import RecipesContext from '../context/RecipesContext';
 import fetchApi from '../services/fetchApi';
 
 function Foods() {
-
   const { meals,
     setMeals,
-    // data,
     categories,
     setCategories,
     filter,
-    // setFilter,
     filteredRecipes,
     setFilteredRecipes,
     setToggle,
@@ -23,24 +20,22 @@ function Foods() {
   } = useContext(RecipesContext);
   const { pathname } = useLocation();
 
-
   useEffect(() => {
     async function fetchRecipes() {
       const apiReturn = state
-        ? await fetchApi('ingrediente', state.ingredient, pathname)
+        ? await fetchApi('ingrediente', '', pathname)
         : await fetchApi('nome', '', pathname);
       const apiReturnArr = Object.values(apiReturn)[0];
       setMeals(apiReturnArr);
     }
 
     fetchRecipes();
-  }, [pathname, setMeals, state]);
+  }, [pathname, setMeals]);
 
   useEffect(() => {
     async function fetchCategories() {
       const response = await fetchApi('categoria', '', pathname);
       const responseArr = Object.values(response)[0];
-      // console.log(responseArr);
       setCategories(responseArr);
     }
 
@@ -49,11 +44,8 @@ function Foods() {
 
   useEffect(() => {
     async function fetchFilter() {
-      // console.log(filter);
       const filterResponse = await fetchApi('filtro', filter, pathname);
-      // console.log(filterResponse);
       const filteredRecipesArr = Object.values(filterResponse)[0];
-      // console.log(filteredRecipesArr);
       setFilteredRecipes(filteredRecipesArr);
     }
     fetchFilter();
@@ -61,7 +53,6 @@ function Foods() {
 
   function displayRecipes(recipes) {
     const MAX_RECIPES = 12;
-    // console.log(recipes);
     return recipes.slice(0, MAX_RECIPES).map((recipe, index) => (
       <Link to={ `/comidas/${recipe.idMeal}` } key={ recipe.idMeal }>
         <RecipeCard
@@ -74,7 +65,6 @@ function Foods() {
 
   function displayCategoryButtons(cat) {
     const MAX_CATEGORIES = 5;
-    // console.log(cat);
     return cat.slice(0, MAX_CATEGORIES).map((category, index) => (
       <CategoryButtons
         key={ index }
@@ -88,8 +78,6 @@ function Foods() {
     setToggle(false);
   };
 
-  // const mealBy = filteredRecipes;
-  // console.log(mealBy);
   return (
     <div>
       <Header pageTitle="Comidas" searchBtn />

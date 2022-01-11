@@ -8,39 +8,34 @@ import CategoryButtons from '../components/CategoryButtons';
 import fetchApi from '../services/fetchApi';
 
 function Drinks() {
-
   const { drinks,
     setDrinks,
     categories,
     setCategories,
     filter,
-    // setFilter,
     filteredDrinks,
-    // setFilteredRecipes,
     setFilteredDrinks,
     setToggle,
     toggle,
   } = useContext(RecipesContext);
   const { pathname } = useLocation();
-  
+
   useEffect(() => {
     async function fetchRecipes() {
       const apiReturn = state
-        ? await fetchApi('ingrediente', state.ingredient, pathname)
+        ? await fetchApi('ingrediente', '', pathname)
         : await fetchApi('nome', '', pathname);
       const apiReturnArr = Object.values(apiReturn)[0];
       setDrinks(apiReturnArr);
     }
 
     fetchRecipes();
-  }, [pathname, setDrinks, state]);
+  }, [pathname, setDrinks]);
 
-  // console.log(drinks);
   useEffect(() => {
     async function fetchCategories() {
       const response = await fetchApi('categoria', '', pathname);
       const responseArr = Object.values(response)[0];
-      // console.log(responseArr);
       setCategories(responseArr);
     }
 
@@ -84,8 +79,6 @@ function Drinks() {
   const handleButtonAll = () => {
     setToggle(false);
   };
-
-  // const drinkF = filteredDrinks;
 
   return (
     <div>

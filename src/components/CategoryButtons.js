@@ -10,7 +10,6 @@ function CategoryButtons({ category }) {
 
   function handleFilter(e) {
     const filterValue = e.target.value;
-    // console.log(filterValue);
     setIsToggled(!isToggled);
     console.log(toggle);
     setFilter(filterValue);
