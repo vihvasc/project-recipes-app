@@ -15,6 +15,8 @@ export default async function fetchApi(type, value, pageTitle) {
     nome: 'search.php?s=',
     primeira: 'search.php?f=',
     receita: 'lookup.php?i=',
+    categoria: 'list.php?c=list',
+    filtro: 'filter.php?c=',
   };
 
   const response = await fetch(`https://www.${domain}.com/api/json/v1/1/${queryParameter[type]}${value}`);

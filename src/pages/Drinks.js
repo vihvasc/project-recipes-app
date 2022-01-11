@@ -4,12 +4,23 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import RecipesContext from '../context/RecipesContext';
 import RecipeCard from '../components/RecipeCard';
+import CategoryButtons from '../components/CategoryButtons';
 import fetchApi from '../services/fetchApi';
 
 function Drinks() {
-  const { drinks, setDrinks, data } = useContext(RecipesContext);
+  const { drinks,
+    setDrinks,
+    categories,
+    setCategories,
+    filter,
+    // setFilter,
+    filteredDrinks,
+    // setFilteredRecipes,
+    setFilteredDrinks,
+    setToggle,
+    toggle,
+  } = useContext(RecipesContext);
   const { pathname } = useLocation();
-
   useEffect(() => {
     async function fetchRecipes() {
       const apiReturn = await fetchApi('nome', '', pathname);
@@ -19,6 +30,27 @@ function Drinks() {
 
     fetchRecipes();
   }, [pathname, setDrinks]);
+
+  // console.log(drinks);
+  useEffect(() => {
+    async function fetchCategories() {
+      const response = await fetchApi('categoria', '', pathname);
+      const responseArr = Object.values(response)[0];
+      // console.log(responseArr);
+      setCategories(responseArr);
+    }
+
+    fetchCategories();
+  }, [pathname, setCategories]);
+
+  useEffect(() => {
+    async function fetchFilter() {
+      const filterResponse = await fetchApi('filtro', filter, pathname);
+      const filteredRecipesArr = Object.values(filterResponse)[0];
+      setFilteredDrinks(filteredRecipesArr);
+    }
+    fetchFilter();
+  }, [pathname, filter, setFilteredDrinks]);
 
   function displayRecipes(recipes) {
     const MAX_RECIPES = 12;
@@ -33,11 +65,40 @@ function Drinks() {
     ));
   }
 
+  function displayCategoryButtons(cat) {
+    const MAX_CATEGORIES = 5;
+
+    return cat.slice(0, MAX_CATEGORIES).map((category, index) => (
+      <CategoryButtons
+        key={ category.strCategory }
+        category={ category }
+        index={ index }
+      />
+    ));
+  }
+
+  const handleButtonAll = () => {
+    setToggle(false);
+  };
+
+  // const drinkF = filteredDrinks;
+
   return (
     <div>
       <Header pageTitle="Bebidas" searchBtn />
+      <section>
+        <button
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ handleButtonAll }
+        >
+          All
+        </button>
+        { categories && displayCategoryButtons(categories) }
+      </section>
       <div>
-        { data && data.length > 0 ? displayRecipes(data) : displayRecipes(drinks) }
+        { toggle && filteredDrinks
+          ? displayRecipes(filteredDrinks) : displayRecipes(drinks) }
       </div>
       <Footer />
     </div>
