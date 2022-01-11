@@ -6,6 +6,11 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [meals, setMeals] = useState([]);
   const [drinks, setDrinks] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [filter, setFilter] = useState('');
+  const [toggle, setToggle] = useState(false);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [filteredDrinks, setFilteredDrinks] = useState([]);
   const [favoriteRecipes, setFavoriteRecipes] = useState(() => (localStorage
     .getItem('favoriteRecipes') ? JSON.parse(localStorage
       .getItem('favoriteRecipes')) : []));
@@ -23,6 +28,16 @@ function Provider({ children }) {
     setMeals,
     drinks,
     setDrinks,
+    categories,
+    setCategories,
+    filter,
+    setFilter,
+    toggle,
+    setToggle,
+    filteredRecipes,
+    setFilteredRecipes,
+    filteredDrinks,
+    setFilteredDrinks,
     favoriteRecipes,
     setFavoriteRecipes,
     recipeProgress,
